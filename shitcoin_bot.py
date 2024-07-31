@@ -205,6 +205,8 @@ async def daily(ctx):
 @bot.command(name='top')
 async def top(ctx):
            
+    global shit_coin_list
+           
     if ctx.channel.id != 818574446910636072:
         
         pass
