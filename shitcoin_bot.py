@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import random
 from random import randint
 from datetime import date
+from modules import sort_dic
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -200,5 +201,38 @@ async def daily(ctx):
         await ctx.send(response)
         
     file_update()
- 
+    
+@bot.command(name='top')
+async def top(ctx):
+           
+    if ctx.channel.id != 818574446910636072:
+        
+        pass
+    
+    else:
+
+        id_to_nick = {}
+
+        for guild in bot.guilds:
+            
+            if guild.name == 'Großfamilie':
+                
+                async for member in guild.fetch_members():
+                
+                    if member.bot == False:
+                        
+                      id_to_nick[member.id] = member.nick  
+
+        shit_coin_list = sort_dic(shit_coin_list)
+        response = ''
+        
+        i = 1
+        
+        for user in shit_coin_list:
+            
+            response += f'{str(i)}. {id_to_nick[user]} mit {str(shit_coin_list[user])} SC\n'
+            i += 1
+     
+        await ctx.send(response)
+     
 bot.run(TOKEN)
