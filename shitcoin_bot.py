@@ -196,5 +196,7 @@ async def daily(ctx):
             response = f'Du hast {str(amount)} SC verdient.'
             
         await ctx.send(response)
+        
+    file_update()
  
 bot.run(TOKEN)
