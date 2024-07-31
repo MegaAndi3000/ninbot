@@ -157,7 +157,7 @@ async def coinflip(ctx, amount):
             
             if cf >= 0.5:
                 
-                response = f'Glückwusnch! Du hast {str(amount)} SC gewonnen.'
+                response = f'Glückwunsch! Du hast {str(amount)} SC gewonnen.'
                 balance += amount
                 
             else:
