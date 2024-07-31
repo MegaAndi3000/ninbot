@@ -3,6 +3,8 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import random
+from random import randint
+from datetime import date
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -13,13 +15,16 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
+daily_min = 15
+daily_max = 25
+
 def file_update():
     
     with open('Data/shitcoin.txt', 'w') as file:
         
         for user in shit_coin_list:
             
-            file.write(f'{user}@{str(shit_coin_list[user])}@{str(daily_check_list[user])}\n')
+            file.write(f'{user}@{str(shit_coin_list[user])}@{daily_check_list[user]}\n')
 
 def file_load():
     
@@ -32,12 +37,12 @@ def file_load():
     with open('Data/shitcoin.txt') as file:
         
         lines = file.readlines()
-        
+
         for account in lines:
             
             word_list = account.split('@')
             shit_coin_list[int(word_list[0])] = int(word_list[1])
-            daily_check_list[int(word_list[0])] = int(word_list[2])
+            daily_check_list[int(word_list[0])] = word_list[2].split('\n')[0]
 
 @bot.event
 async def on_ready():
@@ -68,9 +73,9 @@ async def data_reset(ctx):
                     
                         if member.bot == False:
                             
-                            file.write(f'{member.id}@0@0\n')
+                            file.write(f'{member.id}@0@1970-01-01\n')
 
-    file_update()
+    file_load()
 
 @bot.command(name='show_data')
 async def show_data(ctx):
@@ -163,6 +168,33 @@ async def coinflip(ctx, amount):
             shit_coin_list[user] = balance
             file_update()
 
+        await ctx.send(response)
+
+@bot.command(name='daily')
+async def daily(ctx):
+        
+    if ctx.channel.id != 818574446910636072:
+        
+        pass
+    
+    else:
+     
+        user = ctx.author.id
+        last_check = daily_check_list[user]
+        
+        today = date.today()
+        
+        if today == last_check:
+            
+            response = 'Du hast schon deine heutige Belohnung eingesammelt.'
+            
+        else:
+            
+            amount = randint(daily_min, daily_max)
+            shit_coin_list[user] += amount
+            daily_check_list[user] = today
+            response = f'Du hast {str(amount)} SC verdient.'
+            
         await ctx.send(response)
  
 bot.run(TOKEN)
