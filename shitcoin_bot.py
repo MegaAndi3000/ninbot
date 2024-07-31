@@ -35,8 +35,8 @@ def file_load():
         for account in lines:
             
             word_list = account.split('@')
-            shit_coin_list[word_list[0]] = int(word_list[1])
-            daily_check_list[word_list[0]] = int(word_list[2])
+            shit_coin_list[int(word_list[0])] = int(word_list[1])
+            daily_check_list[int(word_list[0])] = int(word_list[2])
 
 @bot.event
 async def on_ready():
@@ -108,8 +108,13 @@ async def coin_set(ctx, user, amount):
     
     else:
         
-        shit_coin_list[user] = int(amount)
+        shit_coin_list[int(user)] = int(amount)
         
     file_update()
+
+@bot.command(name='bal')
+async def balance(ctx):
+    
+    await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
 
 bot.run(TOKEN)
