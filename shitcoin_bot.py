@@ -232,8 +232,10 @@ async def top(ctx):
         
         for user in shit_coin_list:
             
-            response += f'{str(i)}. {id_to_nick[user]} mit {str(shit_coin_list[user])} SC\n'
-            i += 1
+            if shit_coin_list[user] > 0:
+                
+                response += f'{str(i)}. {id_to_nick[user]} mit {str(shit_coin_list[user])} SC\n'
+                i += 1
      
         await ctx.send(response)
      
