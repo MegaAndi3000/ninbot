@@ -2,6 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+import random
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -117,4 +118,51 @@ async def balance(ctx):
     
     await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
 
+@bot.command(name='cf')
+async def coinflip(ctx, amount):
+             
+    if ctx.channel.id != 818574446910636072:
+        
+        pass
+    
+    else:
+        
+        user = ctx.author.id
+        balance = shit_coin_list[user]
+        
+        if amount == 'all':
+            
+            amount = balance
+            
+        else:
+            
+            amount = int(amount)
+            
+        if amount > balance:
+            
+            response = 'Du hast nicht genügend SC.'
+            
+        elif amount <= 0:
+            
+            response = 'Du kleiner Halunke. So nicht!'
+            
+        else:
+            
+            cf = random.random()
+            
+            if cf >= 0.5:
+                
+                response = f'Glückwusnch! Du hast {str(amount)} SC gewonnen.'
+                balance += amount
+                
+            else:
+                
+                response = f'Schade! Du hast {str(amount)} SC verloren. Das nächste Mal läuft es bestimmt besser!'
+                balance -= amount
+                
+            shit_coin_list[user] = balance
+            file_update()
+
+        await ctx.send(response)
+ 
 bot.run(TOKEN)
