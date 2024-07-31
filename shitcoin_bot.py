@@ -169,6 +169,8 @@ async def coinflip(ctx, amount):
             file_update()
 
         await ctx.send(response)
+        
+    file_update()
 
 @bot.command(name='daily')
 async def daily(ctx):
