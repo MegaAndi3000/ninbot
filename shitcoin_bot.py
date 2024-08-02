@@ -287,7 +287,7 @@ async def gift(ctx, target, amount):
             shit_coin_list[user] -= amount
             shit_coin_list[target_id] += amount
             
-            response = 'Du hast {target} {amount} SC geschenkt.'
+            response = f'Du hast {target} {amount} SC geschenkt.'
 
         file_update()
         await ctx.send(response)            
