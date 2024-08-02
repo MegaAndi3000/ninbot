@@ -154,6 +154,10 @@ async def coinflip(ctx, amount):
             
             cf = random.random()
             
+            with open('Logs/coinflip.txt', 'a') as file:
+                
+                file.write(str(cf)+'\n')
+                
             if cf >= params['coinflip_pivot']:
                 
                 response = f'Glückwunsch! Du hast {str(amount)} SC gewonnen.'
@@ -237,5 +241,28 @@ async def top(ctx):
                 i += 1
      
         await ctx.send(response)
+     
+@bot.command(name='cf_history')
+async def coinflip_history(ctx):
+    
+    if ctx.channel.id != 818574446910636072:
+        
+        pass
+
+    else:
+        
+        count = 0
+        sum = 0
+        
+        with open('Logs/coinflip.txt', 'r') as file:
+            
+            lines = file.readlines()
+            count = len(lines)
+            
+            for line in lines:
+                
+                sum += float(line)
+                
+        await ctx.send(f'Anzahl Coinflips: {count}\nDurchschnitt: {str(sum/count)}')
      
 bot.run(TOKEN)
