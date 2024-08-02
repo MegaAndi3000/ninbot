@@ -22,6 +22,7 @@ This Bot enables server members to earn "Shitcoin" (SC). They can then gamble wi
 |cf \[amount\]|coin flip: user receives/loses their wager|
 |cf_history|DEBUG: shows number of logged coin flips and average pivot value|
 |daily|grants the user a random amount of SC; once per day|
+|gift \[target\] \[amount\]|gifts the target the specified amount of SC|
 |top|shows the current leaderboard|
 
 ### Commands (developer)
