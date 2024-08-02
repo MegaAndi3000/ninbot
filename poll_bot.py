@@ -11,7 +11,7 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
-channel_list = [808968021841281074]
+channel_list = [808968021841281074, 1105874358905356288, 805748081928306729, 836144979097157683, 1088021634125926450]
 
 emoji = {
     'smile': '\U0001F601',
