@@ -216,7 +216,7 @@ async def top(ctx):
     
     else:
 
-        id_to_nick = get_id_to_nick(bot)
+        id_to_nick = await get_id_to_nick(bot)
 
         shit_coin_list = sort_dic(shit_coin_list)
         response = ''

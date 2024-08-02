@@ -32,7 +32,7 @@ def get_params():
             
     return params
 
-def get_id_to_nick(bot):
+async def get_id_to_nick(bot):
 
     id_to_nick = {}
 
