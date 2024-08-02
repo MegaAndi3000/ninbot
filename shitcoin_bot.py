@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import random
 from random import randint
 from datetime import date
-from modules import sort_dic, get_params, get_id_to_nick
+from modules import *
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
