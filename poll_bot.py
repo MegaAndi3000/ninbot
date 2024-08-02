@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import time
 
 load_dotenv()
-TOKEN = os.getenv('NINBOT_TOKEN')
+TOKEN = os.getenv('POLLBOT_TOKEN')
 
 intents = discord.Intents.default()
 intents.message_content = True
