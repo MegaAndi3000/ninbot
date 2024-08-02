@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import random
 from random import randint
 from datetime import date
-from modules import sort_dic, get_params
+from modules import sort_dic, get_params, get_id_to_nick
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -216,17 +216,7 @@ async def top(ctx):
     
     else:
 
-        id_to_nick = {}
-
-        for guild in bot.guilds:
-            
-            if guild.name == 'Großfamilie':
-                
-                async for member in guild.fetch_members():
-                
-                    if member.bot == False:
-                        
-                      id_to_nick[member.id] = member.nick  
+        id_to_nick = get_id_to_nick(bot)
 
         shit_coin_list = sort_dic(shit_coin_list)
         response = ''

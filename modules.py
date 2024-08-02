@@ -31,3 +31,19 @@ def get_params():
             params[split[0]] = float(split[1])
             
     return params
+
+def get_id_to_nick(bot):
+
+    id_to_nick = {}
+
+    for guild in bot.guilds:
+        
+        if guild.name == 'Großfamilie':
+            
+            async for member in guild.fetch_members():
+            
+                if member.bot == False:
+                    
+                    id_to_nick[member.id] = member.nick  
+
+    return id_to_nick
