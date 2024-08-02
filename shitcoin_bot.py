@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import random
 from random import randint
 from datetime import date
-from modules import sort_dic
+from modules import sort_dic, get_params
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -15,9 +15,6 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
-
-daily_min = 15
-daily_max = 25
 
 def file_update():
     
@@ -133,6 +130,7 @@ async def coinflip(ctx, amount):
     
     else:
         
+        params = get_params()
         user = ctx.author.id
         balance = shit_coin_list[user]
         
@@ -156,7 +154,7 @@ async def coinflip(ctx, amount):
             
             cf = random.random()
             
-            if cf >= 0.5:
+            if cf >= params['coinflip_pivot']:
                 
                 response = f'Glückwunsch! Du hast {str(amount)} SC gewonnen.'
                 balance += amount
@@ -182,6 +180,7 @@ async def daily(ctx):
     
     else:
      
+        params = get_params()
         user = ctx.author.id
         last_check = daily_check_list[user]
         
@@ -193,7 +192,7 @@ async def daily(ctx):
             
         else:
             
-            amount = randint(daily_min, daily_max)
+            amount = randint(params['daily_min'], params['daily_max'])
             shit_coin_list[user] += amount
             daily_check_list[user] = today
             response = f'Du hast {str(amount)} SC verdient.'

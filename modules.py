@@ -16,3 +16,18 @@ def sort_dic(dictionary):
                     new_dic[key] = value
                     
     return new_dic
+
+def get_params():
+    
+    params = {}
+    
+    with open('.params.txt', 'r') as file:
+        
+        lines = file.readlines()
+
+        for line in lines:
+            
+            split = line.split('=')
+            params[split[0]] = int(split[1])
+            
+    return params
