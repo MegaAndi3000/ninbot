@@ -28,6 +28,6 @@ def get_params():
         for line in lines:
             
             split = line.split('=')
-            params[split[0]] = int(split[1])
+            params[split[0]] = float(split[1])
             
     return params
