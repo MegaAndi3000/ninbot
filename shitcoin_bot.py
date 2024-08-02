@@ -241,18 +241,23 @@ async def coinflip_history(ctx):
 
     else:
         
+        count_total = 0
         count = 0
         sum = 0
         
         with open('Logs/coinflip.txt', 'r') as file:
             
             lines = file.readlines()
-            count = len(lines)
+            count_total = len(lines)
             
             for line in lines:
-                
+                          
                 sum += float(line)
                 
-        await ctx.send(f'Anzahl Coinflips: {count}\nDurchschnitt: {str(sum/count)}')
-     
+                if float(line) >= 0.5:
+                    
+                    count += 1
+                
+        await ctx.send(f'Anzahl Coinflips: {count_total}\ncf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
+        
 bot.run(TOKEN)
