@@ -259,5 +259,37 @@ async def coinflip_history(ctx):
                     count += 1
                 
         await ctx.send(f'Anzahl Coinflips: {count_total}\ncf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
+
+@bot.command(name='gift')
+async def gift(ctx, target, amount):
+    
+    if ctx.channel.id != 818574446910636072:
+        
+        pass
+
+    else:
+        
+        nick_to_id = await get_nick_to_id(bot)
+        user = ctx.author.id
+        amount = int(amount)
+        
+        if amount > shit_coin_list[user]:
+            
+            response = 'Du hast nicht genügend SC dafür.'
+            
+        elif amount <= 0:
+            
+            response = 'Du kleiner Halunke. So nicht!'
+            
+        else:
+            
+            target_id = nick_to_id[target]
+            shit_coin_list[user] -= amount
+            shit_coin_list[target_id] += amount
+            
+            response = 'Du hast {target} {amount} SC geschenkt.'
+
+        file_update()
+        await ctx.send(response)            
         
 bot.run(TOKEN)
