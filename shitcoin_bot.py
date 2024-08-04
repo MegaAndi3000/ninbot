@@ -196,6 +196,10 @@ async def daily(ctx):
             
         else:
             
+            with open('Data/daily.txt', 'a') as file:
+                
+                file.write(f'@{last_check}@{today}@\n')
+            
             amount = randint(params['daily_min'], params['daily_max'])
             shit_coin_list[user] += amount
             daily_check_list[user] = today
