@@ -157,7 +157,7 @@ async def coinflip(ctx, amount):
                 
                 file.write(str(cf)+'\n')
                 
-            if cf >= os.getenv('CF_PIVOT'):
+            if cf >= float(os.getenv('CF_PIVOT')):
                 
                 response = f'Glückwunsch! Du hast {str(amount)} SC gewonnen.'
                 balance += amount
@@ -198,7 +198,7 @@ async def daily(ctx):
                 
                 file.write(f'@{last_check}@{today}@\n')
             
-            amount = randint(os.getenv('DAILY_MIN'), os.getenv('DAILY_MAX'))
+            amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
             shit_coin_list[user] += amount
             daily_check_list[user] = today
             response = f'Du hast {str(amount)} SC verdient.'
