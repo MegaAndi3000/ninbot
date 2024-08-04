@@ -17,21 +17,6 @@ def sort_dic(dictionary):
                     
     return new_dic
 
-def get_params():
-    
-    params = {}
-    
-    with open('.params.txt', 'r') as file:
-        
-        lines = file.readlines()
-
-        for line in lines:
-            
-            split = line.split('=')
-            params[split[0]] = float(split[1])
-            
-    return params
-
 async def get_id_to_nick(bot):
 
     id_to_nick = {}

@@ -1,6 +1,5 @@
 /Logs
 /Data
 .env
-.params.txt
 test.py
 \__pycache__
