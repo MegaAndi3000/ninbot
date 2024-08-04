@@ -2,6 +2,7 @@ import os
 import discord
 from dotenv import load_dotenv
 import time
+from funcs import *
 
 load_dotenv()
 TOKEN = os.getenv('POLLBOT_TOKEN')
@@ -10,8 +11,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 client = discord.Client(intents=intents)
-
-channel_list = [808968021841281074, 1105874358905356288, 805748081928306729, 836144979097157683, 1088021634125926450]
 
 emoji = {
     'smile' : '\U0001F601',
@@ -43,18 +42,25 @@ async def on_message(message):
 
     global reactions
     global query
+    id_list = get_ids()
+
+    channel_list = [id_list['zitate'],
+                    id_list['memes-und-witze'],
+                    id_list['suesse-tiere'],
+                    id_list['katzenbilder'],
+                    id_list['atelier']]
 
     if message.channel.id in channel_list:
 
         await message.add_reaction(emoji['like'])
         await message.add_reaction(emoji['dislike'])
         
-    elif message.channel.id == 1182071341587906700:
+    elif message.channel.id == id_list['smash-or-pass']:
         
         await message.add_reaction(emoji['s'])
         await message.add_reaction(emoji['p'])
 
-    elif message.channel.id == 805757738067689502:
+    elif message.channel.id == id_list['umfragen']:
         
         if message.author != client.user:
             

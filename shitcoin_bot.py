@@ -51,11 +51,13 @@ async def on_ready():
 @bot.command(name='data_reset')
 async def data_reset(ctx):
     
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
-    elif ctx.author.id != 477835895702028298:
+    elif ctx.author.id != id_list['MegaAndi3000']:
         
         await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
         
@@ -78,11 +80,13 @@ async def data_reset(ctx):
 @bot.command(name='show_data')
 async def show_data(ctx):
             
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
-    elif ctx.author.id != 477835895702028298:
+    elif ctx.author.id != id_list['MegaAndi3000']:
         
         await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
     
@@ -102,11 +106,13 @@ async def show_data(ctx):
 @bot.command(name='set')
 async def coin_set(ctx, user, amount):
             
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
-    elif ctx.author.id != 477835895702028298:
+    elif ctx.author.id != id_list['MegaAndi3000']:
         
         await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
     
@@ -123,8 +129,10 @@ async def balance(ctx):
 
 @bot.command(name='cf')
 async def coinflip(ctx, amount):
-             
-    if ctx.channel.id != 818574446910636072:
+            
+    id_list = get_ids()
+     
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
@@ -177,7 +185,9 @@ async def coinflip(ctx, amount):
 @bot.command(name='daily')
 async def daily(ctx):
         
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
@@ -205,10 +215,11 @@ async def daily(ctx):
     
 @bot.command(name='top')
 async def top(ctx):
-           
+        
     global shit_coin_list
+    id_list = get_ids()
            
-    if ctx.channel.id != 818574446910636072:
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
@@ -233,7 +244,9 @@ async def top(ctx):
 @bot.command(name='cf_history')
 async def coinflip_history(ctx):
     
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
 
@@ -261,7 +274,9 @@ async def coinflip_history(ctx):
 @bot.command(name='gift')
 async def gift(ctx, target, amount):
     
-    if ctx.channel.id != 818574446910636072:
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
 

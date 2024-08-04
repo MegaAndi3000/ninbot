@@ -17,6 +17,23 @@ def sort_dic(dictionary):
                     
     return new_dic
 
+def get_ids():
+    
+    id_dict = {}
+    
+    with open('.ids', 'r') as file:
+        
+        lines = file.readlines()
+        
+        for line in lines:
+        
+            if len(line) > 2:
+            
+                split = line.split(' = ')    
+                id_dict[split[0]] = int(split[1])
+                
+    return id_dict
+
 async def get_id_to_nick(bot):
 
     id_to_nick = {}

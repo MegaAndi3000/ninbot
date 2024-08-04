@@ -1,5 +1,6 @@
 /Logs
 /Data
 .env
+.ids
 test.py
 \__pycache__
