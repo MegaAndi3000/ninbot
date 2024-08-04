@@ -186,7 +186,7 @@ async def daily(ctx):
         user = ctx.author.id
         last_check = daily_check_list[user]
         
-        today = date.today()
+        today = str(date.today())
         
         if today == last_check:
             
