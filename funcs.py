@@ -1,4 +1,12 @@
-def sort_dic(dictionary):
+def sort_dic(dictionary:dict):
+    """Sorts a directory by its values
+
+    Args:
+        dictionary (dict): directory, which is to be sorted
+
+    Returns:
+        dict: sorted dictory
+    """
     
     new_dic = {}
     
@@ -18,6 +26,11 @@ def sort_dic(dictionary):
     return new_dic
 
 def get_ids():
+    """Reads the ids of channels und users from '.ids'.
+
+    Returns:
+        dict: directory, which maps name (str) to id (int)
+    """
     
     id_dict = {}
     
@@ -34,7 +47,15 @@ def get_ids():
                 
     return id_dict
 
-async def get_id_to_nick(bot):
+async def get_id_to_nick(bot:bot):
+    """Generates a directory, which maps id to nick.
+
+    Args:
+        bot (bot): a discord.py bot client
+
+    Returns:
+        dict: directory, which maps id (int) to nick (str)
+    """
 
     id_to_nick = {}
 
@@ -50,7 +71,15 @@ async def get_id_to_nick(bot):
 
     return id_to_nick
 
-async def get_nick_to_id(bot):
+async def get_nick_to_id(bot:bot):
+    """Generates a directory, which maps nick to id.
+
+    Args:
+        bot (bot): a discord.py bot client
+
+    Returns:
+        dict: directory, which maps nick (str) to id (int)
+    """
     
     nick_to_id = {}
     
