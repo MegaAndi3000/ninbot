@@ -269,7 +269,7 @@ async def coinflip_history(ctx):
                     
                     count += 1
                 
-        await ctx.send(f'Anzahl Coinflips: {count_total}\ncf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
+        await ctx.send(f'cf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
 
 @bot.command(name='gift')
 async def gift(ctx, target, amount):
