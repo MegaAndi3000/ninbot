@@ -269,7 +269,7 @@ async def bet(ctx, amount):
         
         shit_coin_list[user] -= amount
         prize = choice(prize_list)
-        reward = amount * prize
+        reward = int(amount * prize)
         shit_coin_list[user] = int(shit_coin_list[user] + reward)
         
         file_update()
