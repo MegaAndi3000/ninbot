@@ -29,6 +29,7 @@ This Bot enables server members to earn "Shitcoin" (SC). They can then gamble wi
 
 |command|function|
 |-------|--------|
+|add_user \[target\]|adds target to the system|
 |data_reset|resets all user data|
 |set \[user\] \[amount\]|sets the balance of the user to the specified amount|
 |show_data|shows all stored user data|
