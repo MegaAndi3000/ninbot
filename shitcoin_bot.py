@@ -246,17 +246,17 @@ async def bet(ctx, amount):
     user = ctx.author.id
     amount = int(amount)   
     
-    if ctx.channel != id_list['shitcoin']:
+    if ctx.channel.id != id_list['shitcoin']:
         
         pass
     
     elif amount > shit_coin_list[user]:
         
-        ctx.send('Du hast nicht genügend SC dafür.')
+        await ctx.send('Du hast nicht genügend SC dafür.')
         
     elif amount < 10:
         
-        ctx.send('Du musst mindestens 10 SC einsetzen.')
+        await ctx.send('Du musst mindestens 10 SC einsetzen.')
         
     else:
         
@@ -276,6 +276,6 @@ async def bet(ctx, amount):
         
         response = answer_list[prize].replace('[amount]', f'{reward}')
         
-        ctx.send(response)
+        await ctx.send(response)
 
 bot.run(TOKEN)
