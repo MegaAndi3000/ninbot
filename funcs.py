@@ -47,7 +47,7 @@ def get_ids():
                 
     return id_dict
 
-async def get_id_to_nick(bot:bot):
+async def get_id_to_nick(bot):
     """Generates a directory, which maps id to nick.
 
     Args:
@@ -71,7 +71,7 @@ async def get_id_to_nick(bot:bot):
 
     return id_to_nick
 
-async def get_nick_to_id(bot:bot):
+async def get_nick_to_id(bot):
     """Generates a directory, which maps nick to id.
 
     Args:
