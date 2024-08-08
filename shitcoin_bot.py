@@ -305,4 +305,23 @@ async def gift(ctx, target, amount):
         file_update()
         await ctx.send(response)            
         
+@bot.command(name='add_user')
+async def add_user(ctx, target):
+
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+            
+        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        shit_coin_list[int(target)] = 0
+        file_update()
+        await ctx.send(f'User {int(target)} wurde hinzugefügt.')
+        
 bot.run(TOKEN)
