@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import random
-from random import randint
+from random import randint, choice
 from datetime import date
 from funcs import *
 
@@ -239,4 +239,43 @@ async def add_user(ctx, target):
         file_update()
         await ctx.send(f'User {int(target)} wurde hinzugefügt.')
         
+@bot.command(name='bet')
+async def bet(ctx, amount):
+    
+    id_list = get_ids()
+    user = ctx.author.id
+    amount = int(amount)   
+    
+    if ctx.channel != id_list['shitcoin']:
+        
+        pass
+    
+    elif amount > shit_coin_list[user]:
+        
+        ctx.send('Du hast nicht genügend SC dafür.')
+        
+    elif amount < 10:
+        
+        ctx.send('Du musst mindestens 10 SC einsetzen.')
+        
+    else:
+        
+        prize_list = [5] * 1 + [2] * 24 + [1] * 20 + [0.5] * 34 + [0] * 21
+        answer_list = {5: 'Jackpot! Du hast [amount] SC gewonnen!',
+                       2: 'Du hast Glück! Du hast [amount] SC gewonnen!',
+                       1: 'Du bekommst ein Freilos!',
+                       0.5: 'Na immerhin...du hast [amount] SC gewonnen.',
+                       0: 'Niete! Naja...'}
+        
+        shit_coin_list[user] -= amount
+        prize = choice(prize_list)
+        reward = amount * prize
+        shit_coin_list[user] = int(shit_coin_list[user] + reward)
+        
+        file_update()
+        
+        response = answer_list[prize].replace('[amount]', f'{reward}')
+        
+        ctx.send(response)
+
 bot.run(TOKEN)
