@@ -244,7 +244,14 @@ async def bet(ctx, amount):
     
     id_list = get_ids()
     user = ctx.author.id
-    amount = int(amount)   
+    
+    if amount == 'all':
+        
+        amount = shit_coin_list[user]
+        
+    else:
+    
+        amount = int(amount)   
     
     if ctx.channel.id != id_list['shitcoin']:
         
