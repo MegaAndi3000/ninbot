@@ -325,12 +325,12 @@ async def coinflip(ctx, amount):
                 
             if cf >= float(os.getenv('CF_PIVOT')):
                 
-                response = f'Gl�ckwunsch! Du hast {str(amount)} SC gewonnen.'
+                response = f'Gl�ckwunsch! Du hast {amount} SC gewonnen.'
                 balance += amount
                 
             else:
                 
-                response = f'Schade! Du hast {str(amount)} SC verloren. Das n�chste Mal l�uft es bestimmt besser!'
+                response = f'Schade! Du hast {amount} SC verloren. Das nächste Mal läuft es bestimmt besser!'
                 balance -= amount
                 
             shit_coin_list[user] = balance
@@ -368,6 +368,6 @@ async def coinflip_history(ctx):
                     
                     count += 1
                 
-        await ctx.send(f'Anzahl Coinflips: {count_total}\ncf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
+        await ctx.send(f'cf-Durchschnitt: {sum/count_total}\nQuote: {count}/{count_total} = {count/count_total}')
 
 bot.run(TOKEN)
