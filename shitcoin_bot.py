@@ -99,7 +99,7 @@ async def show_data(ctx):
         
         for user in shit_coin_list:
             
-            response += f'{str(user)}: {str(shit_coin_list[user])} SC, DC {str(daily_check_list[user])}\n'
+            response += f'{user}: {shit_coin_list[user]} SC, DC {daily_check_list[user]}\n'
 
     await ctx.channel.send(response)
 
@@ -152,7 +152,7 @@ async def daily(ctx):
             amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
             shit_coin_list[user] += amount
             daily_check_list[user] = today
-            response = f'Du hast {str(amount)} SC verdient.'
+            response = f'Du hast {amount} SC verdient.'
             
         await ctx.send(response)
         
@@ -181,7 +181,7 @@ async def top(ctx):
             
             if shit_coin_list[user] > 0:
                 
-                response += f'{str(i)}. {id_to_nick[user]} mit {str(shit_coin_list[user])} SC\n'
+                response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
                 i += 1
      
         await ctx.send(response)

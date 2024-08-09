@@ -69,7 +69,7 @@ async def on_message(message):
             query = split[3:]
             
             await message.delete()
-            await message.send(f'<@!{str(message.author.id)}>: {query}')
+            await message.send(f'<@!{message.author.id}>: {query}')
             
         else:
             

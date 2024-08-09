@@ -21,6 +21,6 @@ async def on_message(message):
 
     with open(f'Logs/{message.channel.id}.txt', 'a') as file:
 
-        file.write(f'\n~ {str(int(time.mktime(message.created_at.timetuple())))} ~ {str(message.id)} ~ {str(message.author.id)} ~ {message.content}')
+        file.write(f'\n~ {int(time.mktime(message.created_at.timetuple()))} ~ {message.id} ~ {message.author.id} ~ {message.content}')
 
 client.run(TOKEN)
