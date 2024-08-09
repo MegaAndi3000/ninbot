@@ -284,5 +284,90 @@ async def bet(ctx, amount):
         response = answer_list[prize].replace('[amount]', f'{reward}')
         
         await ctx.send(response)
+        
+@bot.command(name='cf')
+async def coinflip(ctx, amount):
+            
+    id_list = get_ids()
+     
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    else:
+        
+        user = ctx.author.id
+        balance = shit_coin_list[user]
+        
+        if amount == 'all':
+            
+            amount = balance
+            
+        else:
+            
+            amount = int(amount)
+            
+        if amount > balance:
+            
+            response = 'Du hast nicht gen�gend SC.'
+            
+        elif amount <= 0:
+            
+            response = 'Du kleiner Halunke. So nicht!'
+            
+        else:
+            
+            cf = random.random()
+            
+            with open('Logs/coinflip.txt', 'a') as file:
+                
+                file.write(str(cf)+'\n')
+                
+            if cf >= float(os.getenv('CF_PIVOT')):
+                
+                response = f'Gl�ckwunsch! Du hast {str(amount)} SC gewonnen.'
+                balance += amount
+                
+            else:
+                
+                response = f'Schade! Du hast {str(amount)} SC verloren. Das n�chste Mal l�uft es bestimmt besser!'
+                balance -= amount
+                
+            shit_coin_list[user] = balance
+            file_update()
+
+        await ctx.send(response)
+        
+    file_update()
+    
+@bot.command(name='cf_history')
+async def coinflip_history(ctx):
+    
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+
+    else:
+        
+        count_total = 0
+        count = 0
+        sum = 0
+        
+        with open('Logs/coinflip.txt', 'r') as file:
+            
+            lines = file.readlines()
+            count_total = len(lines)
+            
+            for line in lines:
+                          
+                sum += float(line)
+                
+                if float(line) >= 0.5:
+                    
+                    count += 1
+                
+        await ctx.send(f'Anzahl Coinflips: {count_total}\ncf-Durchschnitt: {str(sum/count_total)}\nQuote: {str(count)}/{str(count_total)} = {str(count/count_total)}')
 
 bot.run(TOKEN)
