@@ -325,7 +325,7 @@ async def coinflip(ctx, amount):
                 
             if cf >= float(os.getenv('CF_PIVOT')):
                 
-                response = f'Gl�ckwunsch! Du hast {amount} SC gewonnen.'
+                response = f'Glückwunsch! Du hast {amount} SC gewonnen.'
                 balance += amount
                 
             else:
