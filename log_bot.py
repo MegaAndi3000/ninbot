@@ -23,4 +23,11 @@ async def on_message(message):
 
         file.write(f'\n~ {int(time.mktime(message.created_at.timetuple()))} ~ {message.id} ~ {message.author.id} ~ {message.content}')
 
+@client.event
+async def on_message_edit(before, after):
+    
+    with open(f'Logs/edits.txt', 'a') as file:
+        
+        file.write(f'\n~ {int(time.mktime(after.edited_at.timetuple()))} ~ {after.channel.id} ~ {after.id} ~ {after.author.id} ~ {after.content}')
+
 client.run(TOKEN)
