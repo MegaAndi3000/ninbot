@@ -8,7 +8,7 @@ This Bot simply saves every message, that is sent, edited or deleted.
 
 ## poll_bot
 
-This Bot adds reactions to messages in certain channels, where voting is encouraged.
+This Bot adds reactions to messages in certain channels, where voting is encouraged and enables custom polls in the poll channel.
 
 ## shitcoin_bot
 
