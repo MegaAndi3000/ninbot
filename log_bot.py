@@ -2,6 +2,7 @@ import os
 import discord
 from dotenv import load_dotenv
 import time
+from datetime import datetime
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
@@ -24,10 +25,12 @@ async def on_message(message):
         file.write(f'\n~ {int(time.mktime(message.created_at.timetuple()))} ~ {message.id} ~ {message.author.id} ~ {message.content}')
 
 @client.event
-async def on_message_edit(before, after):
-    
-    with open(f'Logs/edits.txt', 'a') as file:
+async def on_raw_message_edit(event):
+ 
+    print(event.data['edited_timestamp'])
+ 
+    with open('Logs/edits.txt', 'a') as file:
         
-        file.write(f'\n~ {int(time.mktime(after.edited_at.timetuple()))} ~ {after.channel.id} ~ {after.id} ~ {after.author.id} ~ {after.content}')
+        file.write(f'\n~ {int(time.mktime(time.strptime(event.data['edited_timestamp'], '%Y-%m-%dT%H:%M:%S.%f%z')))} ~ {event.channel_id} ~ {event.message_id} ~ {event.data['author']['id']} ~ {event.data['content']}')
 
 client.run(TOKEN)
