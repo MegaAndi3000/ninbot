@@ -4,7 +4,7 @@ Ninbot is a collection of Discord-Bots I have written for a small server with my
 
 ## log_bot
 
-This Bot simply saves every message that is sent to text files.
+This Bot simply saves every message, that is sent, edited or deleted.
 
 ## poll_bot
 
