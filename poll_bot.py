@@ -64,7 +64,7 @@ async def on_message(message):
         
         if message.author != client.user:
             
-            split = ctx.message.content
+            split = message.content
             reactions = [split[0], split[1], split[2]]
             query = split[3:]
             
