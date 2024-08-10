@@ -309,7 +309,7 @@ async def coinflip(ctx, amount):
             
         if amount > balance:
             
-            response = 'Du hast nicht gen�gend SC.'
+            response = 'Du hast nicht genügend SC.'
             
         elif amount <= 0:
             
