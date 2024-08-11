@@ -2,8 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-import random
-from random import randint, choice
+from random import random, randint, choice
 from datetime import date
 from funcs import *
 
@@ -322,13 +321,13 @@ async def coinflip(ctx, amount):
             
         else:
             
-            cf = random.random()
+            cf_value = random()
             
             with open('Logs/coinflip.txt', 'a') as file:
                 
-                file.write(str(cf)+'\n')
+                file.write(str(cf_value)+'\n')
                 
-            if cf >= float(os.getenv('CF_PIVOT')):
+            if cf_value >= float(os.getenv('CF_PIVOT')):
                 
                 response = f'Glückwunsch! Du hast {amount} SC gewonnen.'
                 balance += amount
@@ -374,5 +373,55 @@ async def coinflip_history(ctx):
                     count += 1
                 
         await ctx.send(f'cf-Durchschnitt: {sum/count_total}\nQuote: {count}/{count_total} = {count/count_total}')
+
+@bot.command(name='steal')
+@commands.cooldown(1, 300, commands.BucketType.user)
+async def steal(ctx, target):
+    
+    id_list = get_ids()
+    id_to_nick = get_id_to_nick()
+    nick_to_id = get_nick_to_id()
+    user = ctx.author.id
+    target = nick_to_id[int(target)]
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    else:
+        
+        if shit_coin_list[target] < 100:
+            
+            response = 'Robin Hood stiehlt nicht von den Armen und du sollst das auch nicht tun.'
+            
+        elif shit_coin_list[user] < int(0.1 * shit_coin_list[target]):
+            
+            response = f'Du brauchst {int(0.1 * shit_coin_list[target])} SC dafür. Fluchtwagen bezahlen sich nicht von alleine!'
+            
+        else:
+            
+            cost = int(0.1 * shit_coin_list[target])
+            shit_coin_list[user] -= cost
+            
+            steal_value = random()
+            
+            with open('Logs/steal.txt','a') as file:
+                
+                file.write(f'{steal_value}\n')
+            
+            if steal_value <= os.getenv('STEAL_PIVOT'):
+                
+                loot = int(0.42 * shit_coin_list[target])
+                shit_coin_list[target] -= loot
+                shit_coin_list[user] += (loot * 0.9)
+                
+                response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzgl. Kapitalerwerbssteuer beläuft sich dein Gewinn auf {int(0.9 * loot - cost)} SC.'
+                
+            else:
+                
+                response = f'Du warst leider nicht erfolgreich. Aber immerhin gibt es hier kein Justizsystem.'
+                
+        file_update()
+        await ctx.send(response)
 
 bot.run(TOKEN)
