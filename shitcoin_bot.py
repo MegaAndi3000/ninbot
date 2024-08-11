@@ -187,9 +187,14 @@ async def top(ctx):
         await ctx.send(response)
 
 @bot.command(name='gift')
-async def gift(ctx, target, amount):
+async def gift(ctx, *args):
     
     id_list = get_ids()
+    
+    args = list(args)
+    amount = int(args[-1])
+    args.pop(-1)
+    target = ' '.join(args)
     
     if ctx.channel.id != id_list['shitcoin']:
         
