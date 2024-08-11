@@ -21,7 +21,7 @@ def file_update():
         
         for user in shit_coin_list:
             
-            file.write(f'{user}@{str(shit_coin_list[user])}@{daily_check_list[user]}\n')
+            file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}\n')
 
 def file_load():
     
@@ -379,10 +379,10 @@ async def coinflip_history(ctx):
 async def steal(ctx, target):
     
     id_list = get_ids()
-    id_to_nick = get_id_to_nick()
-    nick_to_id = get_nick_to_id()
+    id_to_nick = await get_id_to_nick(bot)
+    nick_to_id = await get_nick_to_id(bot)
     user = ctx.author.id
-    target = nick_to_id[int(target)]
+    target = nick_to_id[target]
     
     if ctx.channel.id != id_list['shitcoin']:
         
@@ -409,13 +409,13 @@ async def steal(ctx, target):
                 
                 file.write(f'{steal_value}\n')
             
-            if steal_value <= os.getenv('STEAL_PIVOT'):
+            if steal_value <= float(os.getenv('STEAL_PIVOT')):
                 
                 loot = int(0.42 * shit_coin_list[target])
                 shit_coin_list[target] -= loot
-                shit_coin_list[user] += (loot * 0.9)
+                shit_coin_list[user] += loot
                 
-                response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzgl. Kapitalerwerbssteuer beläuft sich dein Gewinn auf {int(0.9 * loot - cost)} SC.'
+                response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzgl. Kapitalerwerbssteuer beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
                 
             else:
                 
