@@ -29,7 +29,7 @@ async def on_raw_message_edit(event):
 
     with open('Logs/edits.txt', 'a') as file:
         
-        file.write(f'\n~ {int(time.mktime(time.strptime(event.data['edited_timestamp'], '%Y-%m-%dT%H:%M:%S.%f%z')))} ~ {event.channel_id} ~ {event.message_id} ~ {event.data['author']['id']} ~ {event.data['content']}')
+        file.write(f'\n~ {int(time.mktime(time.strptime(event.data["edited_timestamp"], "%Y-%m-%dT%H:%M:%S.%f%z")))} ~ {event.channel_id} ~ {event.message_id} ~ {event.data["author"]["id"]} ~ {event.data["content"]}')
 
 @client.event
 async def on_raw_message_delete(event):
