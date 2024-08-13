@@ -27,7 +27,7 @@ def update():
         
         for user in shit_coin_list:
             
-            file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}@{int(steal_check_list)}@{int(all_time_top_list)}\n')
+            file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}@{int(steal_check_list[user])}@{int(all_time_top_list[user])}\n')
 
 def file_load():
     
@@ -251,7 +251,12 @@ async def add_user(ctx, target):
         
     else:
         
-        shit_coin_list[int(target)] = 0
+        user = int(target)
+        
+        shit_coin_list[user] = 0
+        daily_check_list[user] = '1970-01-01'
+        steal_check_list[user] = 0
+        all_time_top_list[user] = 0
         update()
         await ctx.send(f'User {int(target)} wurde hinzugefügt.')
         
