@@ -59,7 +59,7 @@ async def on_ready():
     file_load()
     print('Ready')
     
-@bot.command(name='data_reset')
+@bot.command(name='data_reset', help='DEBUG: Setzt alle Daten zurück.')
 async def data_reset(ctx):
     
     id_list = get_ids()
@@ -88,7 +88,7 @@ async def data_reset(ctx):
 
     file_load()
 
-@bot.command(name='show_data')
+@bot.command(name='show_data', help='DEBUG: Zeigt alle Daten an.')
 async def show_data(ctx):
             
     id_list = get_ids()
@@ -111,7 +111,7 @@ async def show_data(ctx):
 
     await ctx.channel.send(response)
 
-@bot.command(name='set')
+@bot.command(name='set', help='DEBUG: Setzt die SC eines Users auf einen bestimmten Wert.')
 async def coin_set(ctx, user, amount):
             
     id_list = get_ids()
@@ -130,12 +130,12 @@ async def coin_set(ctx, user, amount):
         
     update()
 
-@bot.command(name='bal')
+@bot.command(name='bal', help='Zeigt deinen aktuellen SC-Stand an.')
 async def balance(ctx):
     
     await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
 
-@bot.command(name='daily')
+@bot.command(name='daily', help='Gibt dir eine zufällige tägliche Belohnung.')
 async def daily(ctx):
         
     id_list = get_ids()
@@ -166,7 +166,7 @@ async def daily(ctx):
         
     update()
     
-@bot.command(name='top')
+@bot.command(name='top', help='Zeigt die aktuelle und all time Rangliste an.')
 async def top(ctx):
         
     global shit_coin_list
@@ -209,7 +209,7 @@ async def top(ctx):
      
         await ctx.send(response)
 
-@bot.command(name='gift')
+@bot.command(name='gift', help='Schenke einem anderen User SC.')
 async def gift(ctx, *args):
     
     id_list = get_ids()
@@ -248,7 +248,7 @@ async def gift(ctx, *args):
         update()
         await ctx.send(response)            
         
-@bot.command(name='add_user')
+@bot.command(name='add_user', help='DEBUG: Fügt einen neuen Nutzer hinzu.')
 async def add_user(ctx, target):
 
     id_list = get_ids()
@@ -272,7 +272,7 @@ async def add_user(ctx, target):
         update()
         await ctx.send(f'User {int(target)} wurde hinzugefügt.')
         
-@bot.command(name='bet')
+@bot.command(name='bet', help='Setze deine SC in einer Art Lotterie aufs Spiel.')
 async def bet(ctx, amount):
     
     id_list = get_ids()
@@ -318,7 +318,7 @@ async def bet(ctx, amount):
         
         await ctx.send(response)
         
-@bot.command(name='cf')
+@bot.command(name='cf', help='Setze deine SC beim Münzwurf aufs Spiel.')
 async def coinflip(ctx, amount):
             
     id_list = get_ids()
@@ -373,7 +373,7 @@ async def coinflip(ctx, amount):
         
     update()
     
-@bot.command(name='cf_history')
+@bot.command(name='cf_history', help='Zeigt die Gesamtbilanz der Münzwürfe.')
 async def coinflip_history(ctx):
     
     id_list = get_ids()
@@ -403,7 +403,7 @@ async def coinflip_history(ctx):
                 
         await ctx.send(f'cf-Durchschnitt: {sum/count_total}\nQuote: {count}/{count_total} = {count/count_total}')
 
-@bot.command(name='steal')
+@bot.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
 @commands.cooldown(1, 300, commands.BucketType.user)
 async def steal(ctx, target):
     
