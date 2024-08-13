@@ -170,6 +170,8 @@ async def daily(ctx):
 async def top(ctx):
         
     global shit_coin_list
+    global all_time_top_list
+    
     id_list = get_ids()
            
     if ctx.channel.id != id_list['shitcoin']:
@@ -181,7 +183,8 @@ async def top(ctx):
         id_to_nick = await get_id_to_nick(bot)
 
         shit_coin_list = sort_dic(shit_coin_list)
-        response = ''
+        all_time_top_list = sort_dic(all_time_top_list)
+        response = '=== AKTUELL ===\n\n'
         
         i = 1
         
@@ -191,6 +194,18 @@ async def top(ctx):
                 
                 response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
                 i += 1
+                
+        response += '\n=== ALL-TIME ===\n\n'
+        
+        i = 1
+        
+        for user in all_time_top_list:
+            
+            if i <= 5:
+                
+                response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
+                
+            i += 1
      
         await ctx.send(response)
 
