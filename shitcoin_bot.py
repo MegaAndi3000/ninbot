@@ -15,7 +15,13 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
-def file_update():
+def update():
+    
+    for user in shit_coin_list:
+        
+        if shit_coin_list[user] > all_time_top_list[user]:
+            
+            all_time_top_list[user] = shit_coin_list[user]
     
     with open('Data/shitcoin.txt', 'w') as file:
         
@@ -125,7 +131,7 @@ async def coin_set(ctx, user, amount):
         
         shit_coin_list[int(user)] = int(amount)
         
-    file_update()
+    update()
 
 @bot.command(name='bal')
 async def balance(ctx):
@@ -161,7 +167,7 @@ async def daily(ctx):
             
         await ctx.send(response)
         
-    file_update()
+    update()
     
 @bot.command(name='top')
 async def top(ctx):
@@ -227,7 +233,7 @@ async def gift(ctx, *args):
             
             response = f'Du hast {target} {amount} SC geschenkt.'
 
-        file_update()
+        update()
         await ctx.send(response)            
         
 @bot.command(name='add_user')
@@ -246,7 +252,7 @@ async def add_user(ctx, target):
     else:
         
         shit_coin_list[int(target)] = 0
-        file_update()
+        update()
         await ctx.send(f'User {int(target)} wurde hinzugefügt.')
         
 @bot.command(name='bet')
@@ -289,7 +295,7 @@ async def bet(ctx, amount):
         reward = int(amount * prize)
         shit_coin_list[user] = int(shit_coin_list[user] + reward)
         
-        file_update()
+        update()
         
         response = answer_list[prize].replace('[amount]', f'{reward}')
         
@@ -344,11 +350,11 @@ async def coinflip(ctx, amount):
                 balance -= amount
                 
             shit_coin_list[user] = balance
-            file_update()
+            update()
 
         await ctx.send(response)
         
-    file_update()
+    update()
     
 @bot.command(name='cf_history')
 async def coinflip_history(ctx):
@@ -427,7 +433,7 @@ async def steal(ctx, target):
                 
                 response = f'Du warst leider nicht erfolgreich. Die {cost} SC für die Fluchtwagen musst du trotzdem zahlen. Aber immerhin gibt es hier kein Justizsystem.'
                 
-        file_update()
+        update()
         await ctx.send(response)
 
 bot.run(TOKEN)
