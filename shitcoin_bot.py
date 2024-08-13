@@ -84,7 +84,7 @@ async def data_reset(ctx):
                     
                         if member.bot == False:
                             
-                            file.write(f'{member.id}@0@1970-01-01\n')
+                            file.write(f'{member.id}@0@1970-01-01@0@0\n')
 
     file_load()
 
@@ -103,14 +103,11 @@ async def show_data(ctx):
     
     else:
         
-        global shit_coin_list
-        global daily_check_list
-        
         response = ''
         
         for user in shit_coin_list:
             
-            response += f'{user}: {shit_coin_list[user]} SC, DC {daily_check_list[user]}\n'
+            response += f'{user}: {shit_coin_list[user]} SC, DC {daily_check_list[user]}, SC {steal_check_list[user]}, T {all_time_top_list[user]}\n'
 
     await ctx.channel.send(response)
 
