@@ -64,12 +64,12 @@ async def on_message(message):
         
         if message.author != client.user:
             
-            split = message.content
+            split = message.content.split()
             reactions = [split[0], split[1], split[2]]
-            query = split[3:]
+            query = ' '.join(split[3:])
             
             await message.delete()
-            await message.send(f'<@!{message.author.id}>: {query}')
+            await message.channel.send(f'<@!{message.author.id}>: {query}')
             
         else:
             
