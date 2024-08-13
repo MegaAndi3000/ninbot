@@ -4,6 +4,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from random import random, randint, choice
 from datetime import date
+import time
 from funcs import *
 
 load_dotenv()
@@ -419,7 +420,14 @@ async def steal(ctx, target):
     
     else:
         
-        if shit_coin_list[target] < 100:
+        current_time = time.time()
+        
+        if current_time < steal_check_list[user] + int(os.getenv('STEAL_COOLDOWN')):
+        
+            time_difference = current_time - steal_check_list[user] - int(os.getenv('STEAL_COOLDOWN'))
+            response = f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {time_difference // 60} min {time_difference % 60} s erneut.'
+        
+        elif shit_coin_list[target] < 100:
             
             response = 'Robin Hood stiehlt nicht von den Armen und du sollst das auch nicht tun.'
             
@@ -431,6 +439,7 @@ async def steal(ctx, target):
             
             cost = int(0.1 * shit_coin_list[target])
             shit_coin_list[user] -= cost
+            steal_check_list[user] = current_time
             
             steal_value = random()
             
