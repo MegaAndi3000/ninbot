@@ -21,15 +21,19 @@ def file_update():
         
         for user in shit_coin_list:
             
-            file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}\n')
+            file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}@{int(steal_check_list)}@{int(all_time_top_list)}\n')
 
 def file_load():
     
     global shit_coin_list
     global daily_check_list
+    global steal_check_list
+    global all_time_top_list
     
     shit_coin_list = {}
     daily_check_list = {}
+    steal_check_list = {}
+    all_time_top_list = {}
     
     with open('Data/shitcoin.txt') as file:
         
@@ -39,7 +43,9 @@ def file_load():
             
             word_list = account.split('@')
             shit_coin_list[int(word_list[0])] = int(word_list[1])
-            daily_check_list[int(word_list[0])] = word_list[2].split('\n')[0]
+            daily_check_list[int(word_list[0])] = word_list[2]
+            steal_check_list[int(word_list[0])] = int(word_list[3])
+            all_time_top_list[int(word_list[0])] = int(word_list[4])
 
 @bot.event
 async def on_ready():
