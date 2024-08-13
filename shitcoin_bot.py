@@ -419,7 +419,7 @@ async def steal(ctx, target):
                 
             else:
                 
-                response = f'Du warst leider nicht erfolgreich. Aber immerhin gibt es hier kein Justizsystem.'
+                response = f'Du warst leider nicht erfolgreich. Die {cost} SC für die Fluchtwagen musst du trotzdem zahlen. Aber immerhin gibt es hier kein Justizsystem.'
                 
         file_update()
         await ctx.send(response)
