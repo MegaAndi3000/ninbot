@@ -204,7 +204,7 @@ async def top(ctx):
             
             if i <= 5:
                 
-                response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
+                response += f'{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n'
                 
             i += 1
      
