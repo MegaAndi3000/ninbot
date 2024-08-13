@@ -23,7 +23,7 @@ This Bot enables server members to earn "Shitcoin" (SC). They can then gamble wi
 |daily|grants the user a random amount of SC; once per day|
 |gift \[target\] \[amount\]|gifts the target the specified amount of SC|
 |steal \[target\]|user spends some SC in order to have a chance to steal from the target.|
-|top|shows the current leaderboard|
+|top|shows the current and all-time leaderboards|
 
 ### Commands (developer)
 
