@@ -405,7 +405,6 @@ async def coinflip_history(ctx):
         await ctx.send(f'cf-Durchschnitt: {sum/count_total}\nQuote: {count}/{count_total} = {count/count_total}')
 
 @bot.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
-@commands.cooldown(1, 300, commands.BucketType.user)
 async def steal(ctx, target):
     
     id_list = get_ids()
@@ -424,8 +423,8 @@ async def steal(ctx, target):
         
         if current_time < steal_check_list[user] + int(os.getenv('STEAL_COOLDOWN')):
         
-            time_difference = current_time - steal_check_list[user] - int(os.getenv('STEAL_COOLDOWN'))
-            response = f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {time_difference // 60} min {time_difference % 60} s erneut.'
+            time_difference = int(os.getenv('STEAL_COOLDOWN')) - (current_time - steal_check_list[user])
+            response = f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {int(time_difference // 60)} min {int(time_difference % 60)} s erneut.'
         
         elif shit_coin_list[target] < 100:
             
