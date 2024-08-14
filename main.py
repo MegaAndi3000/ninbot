@@ -3,7 +3,9 @@ from subprocess import call
 
 files = ['log_bot.py',
          'poll_bot.py',
-         'shitcoin_bot.py']
+         'shitcoin_bot.py',
+         'counter_bot.py',
+         'basic_counter_bot.py']
 
 def func(script):
 
