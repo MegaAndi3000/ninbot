@@ -156,6 +156,10 @@ async def daily(ctx):
             
             response = 'Du hast schon deine heutige Belohnung eingesammelt.'
             
+        elif user == id_list['Tobi2']:
+            
+            response = 'Du kleiner Racker!'
+            
         else:
             
             amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
