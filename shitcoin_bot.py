@@ -406,7 +406,7 @@ async def coinflip_history(ctx):
                     
                     count += 1
                 
-        await ctx.send(f'cf-Durchschnitt: {sum/count_total}\nQuote: {count}/{count_total} = {count/count_total}')
+        await ctx.send(f'cf-Durchschnitt: {sum/count_total:.5f}\nQuote: {count}/{count_total} = {count/count_total:.5f}')
 
 @bot.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
 async def steal(ctx, target):
