@@ -1,30 +1,3 @@
-def sort_dic(dictionary:dict):
-    """Sorts a directory by its values
-
-    Args:
-        dictionary (dict): directory, which is to be sorted
-
-    Returns:
-        dict: sorted dictory
-    """
-    
-    new_dic = {}
-    
-    values = list(dictionary.values())
-    values.sort(reverse=True)
-    
-    for value in values:
-        
-        for key in dictionary:
-            
-            if dictionary[key] == value:
-                
-                if key not in new_dic:
-                    
-                    new_dic[key] = value
-                    
-    return new_dic
-
 def get_ids():
     """Reads the ids of channels und users from '.ids'.
 
@@ -94,3 +67,56 @@ async def get_nick_to_id(bot):
                     nick_to_id[member.nick] = member.id
                     
     return nick_to_id
+
+def sort_dic(dictionary:dict):
+    """Sorts a directory by its values
+
+    Args:
+        dictionary (dict): directory, which is to be sorted
+
+    Returns:
+        dict: sorted dictory
+    """
+    
+    new_dic = {}
+    
+    values = list(dictionary.values())
+    values.sort(reverse=True)
+    
+    for value in values:
+        
+        for key in dictionary:
+            
+            if dictionary[key] == value:
+                
+                if key not in new_dic:
+                    
+                    new_dic[key] = value
+                    
+    return new_dic
+
+def sort_dic_value(dictionary:dict, sort_value:str):
+    
+    new_dic = {}
+    
+    dictionaries = list(dictionary.values())
+    values = []
+    
+    for dic in dictionaries:
+        
+        values.append(dic[sort_value])
+    
+    values.sort(reverse=True)
+    
+    for value in values:
+        
+        for key, dic in dictionary.items():
+            
+            if dic[sort_value] == value:
+                
+                if key not in new_dic:
+                    
+                    new_dic[key] = dic
+                    
+    return new_dic
+    
