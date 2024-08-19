@@ -103,7 +103,7 @@ def sort_dic_value(dictionary:dict, sort_value:str):
         sort_value (str): name of the value, by which to sort
 
     Returns:
-        _type_: _description_
+        dict: sorted dictionary
     """
     
     new_dic = {}
