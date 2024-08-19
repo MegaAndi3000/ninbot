@@ -96,6 +96,15 @@ def sort_dic(dictionary:dict):
     return new_dic
 
 def sort_dic_value(dictionary:dict, sort_value:str):
+    """Sorts a dictionary, which contains dictionaries by values of the latter.
+
+    Args:
+        dictionary (dict): dictionary, which is to be sorted
+        sort_value (str): name of the value, by which to sort
+
+    Returns:
+        _type_: _description_
+    """
     
     new_dic = {}
     
