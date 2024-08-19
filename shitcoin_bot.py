@@ -421,6 +421,10 @@ async def steal(ctx, target):
         
         pass
     
+    elif user == id_list['Tobi2']:
+        
+        await ctx.send('Zeitlimits sind nicht dafür da, umgangen zu werden!')
+    
     else:
         
         current_time = time.time()
