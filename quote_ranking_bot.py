@@ -124,7 +124,7 @@ async def quote_count_ranking(ctx):
             
             if stats['count'] >= 5:
             
-                response += f'\n{i}. {author} mit {stats['count']} Zitaten'
+                response += f'\n{i}. {author} mit {stats["count"]} Zitaten'
                 i += 1
             
         response += '\n\n=== "Opfer" ===\n'
@@ -132,7 +132,7 @@ async def quote_count_ranking(ctx):
         
         for victim, stats in victims.items():
             
-            response += f'\n{i}. {victim} mit {stats['count']} Zitaten'
+            response += f'\n{i}. {victim} mit {stats["count"]} Zitaten'
             i += 1
             
         await ctx.send(response)
