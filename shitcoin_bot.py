@@ -134,7 +134,21 @@ async def coin_set(ctx, user, amount):
 @bot.command(name='bal', help='Zeigt deinen aktuellen SC-Stand an.')
 async def balance(ctx):
     
-    await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    else:
+        
+        if shit_coin_list[ctx.author.id] == 0:
+            
+            await ctx.send('Du bist leider broke. Schade Marmelade!')
+
+        else:
+        
+            await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
 
 @bot.command(name='daily', help='Gibt dir eine zufällige tägliche Belohnung.')
 async def daily(ctx):
