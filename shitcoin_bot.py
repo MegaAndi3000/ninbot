@@ -460,7 +460,7 @@ async def steal(ctx, target):
                 shit_coin_list[target] -= loot
                 shit_coin_list[user] += loot
                 
-                response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzgl. Kapitalerwerbssteuer beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
+                response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzüglich der Fluchtwagenkosten beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
                 
             else:
                 
