@@ -17,7 +17,7 @@ intents.members = True
 bot = commands.Bot(command_prefix='.', intents=intents)
 
 def update():
-    
+                        
     for user in shit_coin_list:
         
         if shit_coin_list[user] > all_time_top_list[user]:
@@ -29,6 +29,8 @@ def update():
         for user in shit_coin_list:
             
             file.write(f'{user}@{int(shit_coin_list[user])}@{daily_check_list[user]}@{int(steal_check_list[user])}@{int(all_time_top_list[user])}\n')
+            
+    load_dotenv(override=True)
 
 def file_load():
     
@@ -149,6 +151,8 @@ async def balance(ctx):
         else:
         
             await ctx.send(f'Du hast {shit_coin_list[ctx.author.id]} SC.')
+            
+        update()
 
 @bot.command(name='daily', help='Gibt dir eine zufällige tägliche Belohnung.')
 async def daily(ctx):
@@ -183,7 +187,7 @@ async def daily(ctx):
             
         await ctx.send(response)
         
-    update()
+        update()
     
 @bot.command(name='top', help='Zeigt die aktuelle und all time Rangliste an.')
 async def top(ctx):
@@ -227,6 +231,8 @@ async def top(ctx):
             i += 1
      
         await ctx.send(response)
+        
+        update()
 
 @bot.command(name='gift', help='Schenke einem anderen User SC.')
 async def gift(ctx, *args):
@@ -288,6 +294,7 @@ async def add_user(ctx, target):
         daily_check_list[user] = '1970-01-01'
         steal_check_list[user] = 0
         all_time_top_list[user] = 0
+        
         update()
         await ctx.send(f'User {int(target)} wurde hinzugefügt.')
         
@@ -386,12 +393,10 @@ async def coinflip(ctx, amount):
                 balance -= amount
                 
             shit_coin_list[user] = balance
-            update()
-
+            
+        update()
         await ctx.send(response)
         
-    update()
-    
 @bot.command(name='cf_history', help='Zeigt die Gesamtbilanz der Münzwürfe.')
 async def coinflip_history(ctx):
     
@@ -420,6 +425,7 @@ async def coinflip_history(ctx):
                     
                     count += 1
                 
+        update()
         await ctx.send(f'cf-Durchschnitt: {sum/count_total:.5f}\nQuote: {count}/{count_total} = {count/count_total:.5f}')
 
 @bot.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
