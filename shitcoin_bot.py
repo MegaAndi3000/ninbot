@@ -240,7 +240,7 @@ async def gift(ctx, *args):
     id_list = get_ids()
     
     args = list(args)
-    amount = int(args[-1])
+    amount = args[-1]
     args.pop(-1)
     target = ' '.join(args)
     
@@ -252,8 +252,15 @@ async def gift(ctx, *args):
         
         nick_to_id = await get_nick_to_id(bot)
         user = ctx.author.id
-        amount = int(amount)
         
+        if amount == 'all':
+            
+            amount = shit_coin_list[user]
+            
+        else:
+            
+            amount = int(amount)
+
         if amount > shit_coin_list[user]:
             
             response = 'Du hast nicht genügend SC dafür.'
