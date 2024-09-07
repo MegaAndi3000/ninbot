@@ -495,5 +495,31 @@ async def steal(ctx, target):
                 
         update()
         await ctx.send(response)
+        
+@bot.command(name='show_env', help='DEBUG: Zeigt alle Umgebungsvariablen (.env) an.')
+async def steal(ctx, target):
+    
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+        
+        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        update()
+        env_list = ['CF_PIVOT', 'STEAL_PIVOT', 'STEAL_COOLDOWN', 'DAILY_MIN', 'DAILY_MAX']
+
+        response = ''
+
+        for variable in env_list:
+            
+            response += f'{set_string_length(variable, 14)} = {os.getenv(variable)}'
+        
+        await ctx.send(response)
 
 bot.run(TOKEN)

@@ -68,6 +68,27 @@ async def get_nick_to_id(bot):
                     
     return nick_to_id
 
+def set_string_length(string:str, length:int):
+    """Extends or shortens a given string to a given length.
+
+    Args:
+        string (str): string, which is to be edited
+        length (int): the resulting length
+
+    Returns:
+        str: edited string with given length
+    """
+    
+    if len(string) > length:
+        
+        new_string = string[:length]
+        
+    else:
+        
+        new_string = string + " " * (length - len(string))    
+    
+    return new_string
+
 def sort_dic(dictionary:dict):
     """Sorts a directory by its values
 
