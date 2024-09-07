@@ -497,7 +497,7 @@ async def steal(ctx, target):
         await ctx.send(response)
         
 @bot.command(name='show_env', help='DEBUG: Zeigt alle Umgebungsvariablen (.env) an.')
-async def steal(ctx, target):
+async def show_env(ctx):
     
     id_list = get_ids()
     
@@ -518,7 +518,7 @@ async def steal(ctx, target):
 
         for variable in env_list:
             
-            response += f'{set_string_length(variable, 14)} = {os.getenv(variable)}'
+            response += f'{variable} = {os.getenv(variable)}\n'
         
         await ctx.send(response)
 
