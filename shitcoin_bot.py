@@ -336,9 +336,9 @@ async def bet(ctx, amount):
         prize_list = [5] * 1 + [2] * 24 + [1] * 20 + [0.5] * 34 + [0] * 21
         answer_list = {5: 'Jackpot! Du hast [amount] SC gewonnen!',
                        2: 'Du hast Glück! Du hast [amount] SC gewonnen!',
-                       1: 'Du bekommst ein Freilos!',
-                       0.5: 'Na immerhin...du hast [amount] SC gewonnen.',
-                       0: 'Niete! Naja...'}
+                       1: 'Du hast nichts gewonnen, aber auch nichts verloren.',
+                       0.5: 'Na immerhin...du hast nur [amount] SC verloren.',
+                       0: 'Niete! Du hast leider [amount] SC verloren.'}
         
         shit_coin_list[user] -= amount
         prize = choice(prize_list)
@@ -347,7 +347,7 @@ async def bet(ctx, amount):
         
         update()
         
-        response = answer_list[prize].replace('[amount]', f'{reward}')
+        response = answer_list[prize].replace('[amount]', f'{abs(amount - reward)}')
         
         await ctx.send(response)
         
