@@ -1,5 +1,6 @@
 /Logs
 /Data
+/Test
 .env
 .ids
 test.py
