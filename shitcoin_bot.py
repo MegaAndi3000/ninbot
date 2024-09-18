@@ -461,7 +461,8 @@ async def steal(ctx, target):
             time_difference = int(os.getenv('STEAL_COOLDOWN')) - (current_time - steal_check_list[user])
             response = f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {int(time_difference // 60)} min {int(time_difference % 60)} s erneut.'
         
-        elif shit_coin_list[target] < 100:
+        # Robin Hood clause
+        elif shit_coin_list[target] < 100 or shit_coin_list[target] < 0.5 * shit_coin_list[user]:
             
             response = 'Robin Hood stiehlt nicht von den Armen und du sollst das auch nicht tun.'
             
