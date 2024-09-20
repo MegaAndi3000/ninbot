@@ -99,7 +99,7 @@ async def update():
 async def on_ready():
     
     await update()
-    print('Ready')
+    print('Ready: quote_ranking')
 
 @bot.command(name='zr')
 async def quote_count_ranking(ctx):

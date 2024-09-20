@@ -14,7 +14,7 @@ client = discord.Client(intents=intents)
 @client.event
 async def on_ready():
 
-    print('Ready')
+    print('Ready: counter')
 
     global current_counter
     global last_author

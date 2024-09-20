@@ -60,7 +60,7 @@ def file_load():
 async def on_ready():
     
     file_load()
-    print('Ready')
+    print('Ready: shitcoin')
     
 @bot.command(name='data_reset', help='DEBUG: Setzt alle Daten zurück.')
 async def data_reset(ctx):

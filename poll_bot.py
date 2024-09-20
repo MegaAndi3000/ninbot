@@ -35,7 +35,7 @@ query = ''
 @client.event
 async def on_ready():
 
-    print('Ready')
+    print('Ready: poll')
 
 @client.event
 async def on_message(message):

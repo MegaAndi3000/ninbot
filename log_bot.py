@@ -15,7 +15,7 @@ client = discord.Client(intents=intents)
 @client.event
 async def on_ready():
 
-    print('Ready')
+    print('Ready: log')
 
 @client.event
 async def on_message(message):
