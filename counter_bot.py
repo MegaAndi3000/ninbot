@@ -1,13 +1,14 @@
 import os
 import discord
 from dotenv import load_dotenv
-from funcs import get_ids
+from funcs import get_ids, get_id_to_nick
 
 load_dotenv()
 TOKEN = os.getenv('NINBOT_TOKEN')
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 client = discord.Client(intents=intents)
 
@@ -36,7 +37,7 @@ async def on_message(message):
 
     id_list = get_ids()
     
-    if message.channel.id != id_list['counter']:
+    if message.channel.id != id_list['counter'] or message.author.id == id_list['NinBot']:
         
         pass
     
@@ -53,6 +54,8 @@ async def on_message(message):
             elif number != current_counter + 1:
                 
                 await message.delete()
+                id_to_nick = await get_id_to_nick(client)
+                await message.channel.send(f"{id_to_nick[message.author.id]} hat die Streak gebrochen.")
                 
                 current_counter = 0
                 last_author = 0
