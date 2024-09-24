@@ -33,14 +33,12 @@ async def get_id_to_nick(bot):
     id_to_nick = {}
 
     for guild in bot.guilds:
+            
+        async for member in guild.fetch_members():
         
-        if guild.id == 805743762885443594:
-            
-            async for member in guild.fetch_members():
-            
-                if member.bot == False:
-                    
-                    id_to_nick[member.id] = member.nick  
+            if member.bot == False:
+                
+                id_to_nick[member.id] = member.nick  
 
     return id_to_nick
 
@@ -57,15 +55,13 @@ async def get_nick_to_id(bot):
     nick_to_id = {}
     
     for guild in bot.guilds:
-        
-        if guild.id == 805743762885443594:
+                   
+        async for member in guild.fetch_members():
             
-            async for member in guild.fetch_members():
+            if member.bot == False:
                 
-                if member.bot == False:
-                    
-                    nick_to_id[member.nick] = member.id
-                    
+                nick_to_id[member.nick] = member.id
+                
     return nick_to_id
 
 def set_string_length(string:str, length:int):
