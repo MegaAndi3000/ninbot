@@ -21,7 +21,7 @@ def get_ids():
     return id_dict
 
 async def get_id_to_nick(bot):
-    """Generates a directory, which maps id to nick.
+    """Generates a directory, which maps id to nick (or id to name, if nick doesn't exist).
 
     Args:
         bot (bot): a discord.py bot client
@@ -36,14 +36,18 @@ async def get_id_to_nick(bot):
             
         async for member in guild.fetch_members():
         
-            if member.bot == False:
+            if member.nick:
                 
                 id_to_nick[member.id] = member.nick  
+
+            else:
+                
+                id_to_nick[member.id] = member.name
 
     return id_to_nick
 
 async def get_nick_to_id(bot):
-    """Generates a directory, which maps nick to id.
+    """Generates a directory, which maps nick to id (or name to id, if nick doesn't exist).
 
     Args:
         bot (bot): a discord.py bot client
@@ -58,9 +62,13 @@ async def get_nick_to_id(bot):
                    
         async for member in guild.fetch_members():
             
-            if member.bot == False:
+            if member.nick:
                 
                 nick_to_id[member.nick] = member.id
+                
+            else:
+                
+                nick_to_id[member.name] = member.id
                 
     return nick_to_id
 
