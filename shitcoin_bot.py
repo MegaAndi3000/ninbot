@@ -523,4 +523,26 @@ async def show_env(ctx):
         
         await ctx.send(response)
 
+@bot.command(name = 'remove_user', help='DEBUG: Entfernt einen Nutzer.')
+async def remove_user(ctx, target):
+    
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+            
+        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        user = int(target)
+        
+        del shit_coin_list[user], daily_check_list[user], steal_check_list[user], all_time_top_list[user]
+        
+        update()
+        await ctx.send(f'User {user} wurde entfernt.')
+      
 bot.run(TOKEN)
