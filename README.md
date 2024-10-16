@@ -18,12 +18,14 @@ This Bot enables server members to earn "Shitcoin" (SC). They can then gamble wi
 
 |command|function|
 |-------|--------|
-|bal|shows the users current balance|
+|bal|displays the users current balance|
 |bet \[value\]|user buys a 'lottery ticket' for given value|
+|cf \[amount\]|coin flip: user receives/loses their wager|
+|cf_history|displays number of logged coin flips, succesfull coinflips and average pivot value|
 |daily|grants the user a random amount of SC; once per day|
 |gift \[target\] \[amount\]|gifts the target the specified amount of SC|
 |steal \[target\]|user spends some SC in order to have a chance to steal from the target.|
-|top|shows the current and all-time leaderboards|
+|top|displays the current and all-time leaderboards|
 
 ### Commands (developer)
 
@@ -31,8 +33,10 @@ This Bot enables server members to earn "Shitcoin" (SC). They can then gamble wi
 |-------|--------|
 |add_user \[target\]|adds target to the system|
 |data_reset|resets all user data|
+|remove_user \[target\]|removes the target from the system|
 |set \[user\] \[amount\]|sets the balance of the user to the specified amount|
-|show_data|shows all stored user data|
+|show_data|displays all stored user data|
+|show_env|displays the value of the .env parameters|
 
 ## Documentation
 
