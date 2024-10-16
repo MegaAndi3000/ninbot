@@ -61,77 +61,8 @@ async def on_ready():
     
     file_load()
     print('Ready: shitcoin')
-    
-@bot.command(name='data_reset', help='DEBUG: Setzt alle Daten zurück.')
-async def data_reset(ctx):
-    
-    id_list = get_ids()
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    elif ctx.author.id != id_list['MegaAndi3000']:
-        
-        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
-        
-    else:
-        
-        with open('Data/shitcoin.txt', 'w') as file:
-        
-            for guild in bot.guilds:
-                
-                if guild.name == 'Großfamilie':
-                    
-                    async for member in guild.fetch_members():
-                    
-                        if member.bot == False:
-                            
-                            file.write(f'{member.id}@0@1970-01-01@0@0\n')
 
-    file_load()
-
-@bot.command(name='show_data', help='DEBUG: Zeigt alle Daten an.')
-async def show_data(ctx):
-            
-    id_list = get_ids()
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    elif ctx.author.id != id_list['MegaAndi3000']:
-        
-        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
-    
-    else:
-        
-        response = ''
-        
-        for user in shit_coin_list:
-            
-            response += f'{user}: {shit_coin_list[user]} SC, DC {daily_check_list[user]}, SC {steal_check_list[user]}, T {all_time_top_list[user]}\n'
-
-    await ctx.channel.send(response)
-
-@bot.command(name='set', help='DEBUG: Setzt die SC eines Users auf einen bestimmten Wert.')
-async def coin_set(ctx, user, amount):
-            
-    id_list = get_ids()
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    elif ctx.author.id != id_list['MegaAndi3000']:
-        
-        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
-    
-    else:
-        
-        shit_coin_list[int(user)] = int(amount)
-        
-    update()
+# user commands
 
 @bot.command(name='bal', help='Zeigt deinen aktuellen SC-Stand an.')
 async def balance(ctx):
@@ -154,157 +85,6 @@ async def balance(ctx):
             
         update()
 
-@bot.command(name='daily', help='Gibt dir eine zufällige tägliche Belohnung.')
-async def daily(ctx):
-        
-    id_list = get_ids()
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    else:
-     
-        user = ctx.author.id
-        last_check = daily_check_list[user]
-        
-        today = str(date.today())
-        
-        if today == last_check:
-            
-            response = 'Du hast schon deine heutige Belohnung eingesammelt.'
-            
-        elif user == id_list['Tobi2']:
-            
-            response = 'Du kleiner Racker!'
-            
-        else:
-            
-            amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
-            shit_coin_list[user] += amount
-            daily_check_list[user] = today
-            response = f'Du hast {amount} SC verdient.'
-            
-        await ctx.send(response)
-        
-        update()
-    
-@bot.command(name='top', help='Zeigt die aktuelle und all time Rangliste an.')
-async def top(ctx):
-        
-    global shit_coin_list
-    global all_time_top_list
-    
-    id_list = get_ids()
-           
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    else:
-
-        id_to_nick = await get_id_to_nick(bot)
-
-        shit_coin_list = sort_dic(shit_coin_list)
-        all_time_top_list = sort_dic(all_time_top_list)
-        response = '=== AKTUELL ===\n\n'
-        
-        i = 1
-        
-        for user in shit_coin_list:
-            
-            if shit_coin_list[user] > 0:
-                
-                response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
-                i += 1
-                
-        response += '\n=== ALL-TIME ===\n\n'
-        
-        i = 1
-        
-        for user in all_time_top_list:
-            
-            if i <= 5:
-                
-                response += f'{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n'
-                
-            i += 1
-     
-        await ctx.send(response)
-        
-        update()
-
-@bot.command(name='gift', help='Schenke einem anderen User SC.')
-async def gift(ctx, *args):
-    
-    id_list = get_ids()
-    
-    args = list(args)
-    amount = args[-1]
-    args.pop(-1)
-    target = ' '.join(args)
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-
-    else:
-        
-        nick_to_id = await get_nick_to_id(bot)
-        user = ctx.author.id
-        
-        if amount == 'all':
-            
-            amount = shit_coin_list[user]
-            
-        else:
-            
-            amount = int(amount)
-
-        if amount > shit_coin_list[user]:
-            
-            response = 'Du hast nicht genügend SC dafür.'
-            
-        elif amount <= 0:
-            
-            response = 'Du kleiner Halunke. So nicht!'
-            
-        else:
-            
-            target_id = nick_to_id[target]
-            shit_coin_list[user] -= amount
-            shit_coin_list[target_id] += amount
-            
-            response = f'Du hast {target} {amount} SC geschenkt.'
-
-        update()
-        await ctx.send(response)            
-        
-@bot.command(name='add_user', help='DEBUG: Fügt einen neuen Nutzer hinzu.')
-async def add_user(ctx, target):
-
-    id_list = get_ids()
-    
-    if ctx.channel.id != id_list['shitcoin']:
-        
-        pass
-    
-    elif ctx.author.id != id_list['MegaAndi3000']:
-            
-        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
-        
-    else:
-        
-        user = int(target)
-        
-        shit_coin_list[user] = 0
-        daily_check_list[user] = '1970-01-01'
-        steal_check_list[user] = 0
-        all_time_top_list[user] = 0
-        
-        update()
-        await ctx.send(f'User {int(target)} wurde hinzugefügt.')
-        
 @bot.command(name='bet', help='Setze deine SC in einer Art Lotterie aufs Spiel.')
 async def bet(ctx, amount):
     
@@ -350,7 +130,7 @@ async def bet(ctx, amount):
         response = answer_list[prize].replace('[amount]', f'{abs(amount - reward)}')
         
         await ctx.send(response)
-        
+
 @bot.command(name='cf', help='Setze deine SC beim Münzwurf aufs Spiel.')
 async def coinflip(ctx, amount):
             
@@ -403,7 +183,7 @@ async def coinflip(ctx, amount):
             
         update()
         await ctx.send(response)
-        
+
 @bot.command(name='cf_history', help='Zeigt die Gesamtbilanz der Münzwürfe.')
 async def coinflip_history(ctx):
     
@@ -434,6 +214,87 @@ async def coinflip_history(ctx):
                 
         update()
         await ctx.send(f'cf-Durchschnitt: {sum/count_total:.5f}\nQuote: {count}/{count_total} = {count/count_total:.5f}')
+
+@bot.command(name='daily', help='Gibt dir eine zufällige tägliche Belohnung.')
+async def daily(ctx):
+        
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    else:
+     
+        user = ctx.author.id
+        last_check = daily_check_list[user]
+        
+        today = str(date.today())
+        
+        if today == last_check:
+            
+            response = 'Du hast schon deine heutige Belohnung eingesammelt.'
+            
+        elif user == id_list['Tobi2']:
+            
+            response = 'Du kleiner Racker!'
+            
+        else:
+            
+            amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
+            shit_coin_list[user] += amount
+            daily_check_list[user] = today
+            response = f'Du hast {amount} SC verdient.'
+            
+        await ctx.send(response)
+        
+        update()
+
+@bot.command(name='gift', help='Schenke einem anderen User SC.')
+async def gift(ctx, *args):
+    
+    id_list = get_ids()
+    
+    args = list(args)
+    amount = args[-1]
+    args.pop(-1)
+    target = ' '.join(args)
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+
+    else:
+        
+        nick_to_id = await get_nick_to_id(bot)
+        user = ctx.author.id
+        
+        if amount == 'all':
+            
+            amount = shit_coin_list[user]
+            
+        else:
+            
+            amount = int(amount)
+
+        if amount > shit_coin_list[user]:
+            
+            response = 'Du hast nicht genügend SC dafür.'
+            
+        elif amount <= 0:
+            
+            response = 'Du kleiner Halunke. So nicht!'
+            
+        else:
+            
+            target_id = nick_to_id[target]
+            shit_coin_list[user] -= amount
+            shit_coin_list[target_id] += amount
+            
+            response = f'Du hast {target} {amount} SC geschenkt.'
+
+        update()
+        await ctx.send(response)            
 
 @bot.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
 async def steal(ctx, target):
@@ -496,7 +357,149 @@ async def steal(ctx, target):
                 
         update()
         await ctx.send(response)
+
+@bot.command(name='top', help='Zeigt die aktuelle und all time Rangliste an.')
+async def top(ctx):
         
+    global shit_coin_list
+    global all_time_top_list
+    
+    id_list = get_ids()
+           
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    else:
+
+        id_to_nick = await get_id_to_nick(bot)
+
+        shit_coin_list = sort_dic(shit_coin_list)
+        all_time_top_list = sort_dic(all_time_top_list)
+        response = '=== AKTUELL ===\n\n'
+        
+        i = 1
+        
+        for user in shit_coin_list:
+            
+            if shit_coin_list[user] > 0:
+                
+                response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
+                i += 1
+                
+        response += '\n=== ALL-TIME ===\n\n'
+        
+        i = 1
+        
+        for user in all_time_top_list:
+            
+            if i <= 5:
+                
+                response += f'{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n'
+                
+            i += 1
+     
+        await ctx.send(response)
+        
+        update()
+
+# dev commands
+
+@bot.command(name='add_user', help='DEBUG: Fügt einen neuen Nutzer hinzu.')
+async def add_user(ctx, target):
+
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+            
+        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        user = int(target)
+        
+        shit_coin_list[user] = 0
+        daily_check_list[user] = '1970-01-01'
+        steal_check_list[user] = 0
+        all_time_top_list[user] = 0
+        
+        update()
+        await ctx.send(f'User {int(target)} wurde hinzugefügt.')
+
+@bot.command(name='data_reset', help='DEBUG: Setzt alle Daten zurück.')
+async def data_reset(ctx):
+    
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+        
+        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        with open('Data/shitcoin.txt', 'w') as file:
+        
+            for guild in bot.guilds:
+                
+                if guild.name == 'Großfamilie':
+                    
+                    async for member in guild.fetch_members():
+                    
+                        if member.bot == False:
+                            
+                            file.write(f'{member.id}@0@1970-01-01@0@0\n')
+
+    file_load()
+
+@bot.command(name = 'remove_user', help='DEBUG: Entfernt einen Nutzer.')
+async def remove_user(ctx, target):
+    
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+            
+        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
+        
+    else:
+        
+        user = int(target)
+        
+        del shit_coin_list[user], daily_check_list[user], steal_check_list[user], all_time_top_list[user]
+        
+        update()
+        await ctx.send(f'User {user} wurde entfernt.')
+
+@bot.command(name='set', help='DEBUG: Setzt die SC eines Users auf einen bestimmten Wert.')
+async def coin_set(ctx, user, amount):
+            
+    id_list = get_ids()
+    
+    if ctx.channel.id != id_list['shitcoin']:
+        
+        pass
+    
+    elif ctx.author.id != id_list['MegaAndi3000']:
+        
+        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
+    
+    else:
+        
+        shit_coin_list[int(user)] = int(amount)
+        
+    update()
+
 @bot.command(name='show_env', help='DEBUG: Zeigt alle Umgebungsvariablen (.env) an.')
 async def show_env(ctx):
     
@@ -523,9 +526,9 @@ async def show_env(ctx):
         
         await ctx.send(response)
 
-@bot.command(name = 'remove_user', help='DEBUG: Entfernt einen Nutzer.')
-async def remove_user(ctx, target):
-    
+@bot.command(name='show_data', help='DEBUG: Zeigt alle Daten an.')
+async def show_data(ctx):
+            
     id_list = get_ids()
     
     if ctx.channel.id != id_list['shitcoin']:
@@ -533,16 +536,17 @@ async def remove_user(ctx, target):
         pass
     
     elif ctx.author.id != id_list['MegaAndi3000']:
-            
-        await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
         
+        await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
+    
     else:
         
-        user = int(target)
+        response = ''
         
-        del shit_coin_list[user], daily_check_list[user], steal_check_list[user], all_time_top_list[user]
-        
-        update()
-        await ctx.send(f'User {user} wurde entfernt.')
-      
+        for user in shit_coin_list:
+            
+            response += f'{user}: {shit_coin_list[user]} SC, DC {daily_check_list[user]}, SC {steal_check_list[user]}, T {all_time_top_list[user]}\n'
+
+    await ctx.channel.send(response)
+
 bot.run(TOKEN)
