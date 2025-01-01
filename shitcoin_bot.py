@@ -382,6 +382,11 @@ async def top(ctx):
         
         for user in shit_coin_list:
             
+            
+            if user not in id_to_nick:
+
+                id_to_nick[user] = (await bot.fetch_user(user)).name
+
             if shit_coin_list[user] > 0:
                 
                 response += f'{i}. {id_to_nick[user]} mit {shit_coin_list[user]} SC\n'
