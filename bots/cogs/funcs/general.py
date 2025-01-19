@@ -8,13 +8,9 @@ def get_ids():
     id_dict = {}
     
     with open('.ids', 'r') as file:
-        
         lines = file.readlines()
-        
         for line in lines:
-        
             if len(line) > 2:
-            
                 split = line.split(' = ')    
                 id_dict[split[0]] = int(split[1])
                 
@@ -27,22 +23,17 @@ async def get_id_to_nick(bot):
         bot (bot): a discord.py bot client
 
     Returns:
-        dict: directory, which maps id (int) to nick (str)
+        dict: directory, which maps id (str) to nick (str)
     """
 
     id_to_nick = {}
 
     for guild in bot.guilds:
-            
         async for member in guild.fetch_members():
-        
             if member.nick:
-                
-                id_to_nick[member.id] = member.nick  
-
+                id_to_nick[str(member.id)] = member.nick
             else:
-                
-                id_to_nick[member.id] = member.name
+                id_to_nick[str(member.id)] = member.name
 
     return id_to_nick
 
@@ -53,22 +44,17 @@ async def get_nick_to_id(bot):
         bot (bot): a discord.py bot client
 
     Returns:
-        dict: directory, which maps nick (str) to id (int)
+        dict: directory, which maps nick (str) to id (str)
     """
     
     nick_to_id = {}
     
     for guild in bot.guilds:
-                   
         async for member in guild.fetch_members():
-            
             if member.nick:
-                
-                nick_to_id[member.nick] = member.id
-                
+                nick_to_id[member.nick] = str(member.id)
             else:
-                
-                nick_to_id[member.name] = member.id
+                nick_to_id[member.name] = str(member.id)
                 
     return nick_to_id
 
@@ -84,11 +70,8 @@ def set_string_length(string:str, length:int):
     """
     
     if len(string) > length:
-        
         new_string = string[:length]
-        
     else:
-        
         new_string = string + " " * (length - len(string))    
     
     return new_string
@@ -109,13 +92,9 @@ def sort_dic(dictionary:dict):
     values.sort(reverse=True)
     
     for value in values:
-        
         for key in dictionary:
-            
             if dictionary[key] == value:
-                
                 if key not in new_dic:
-                    
                     new_dic[key] = value
                     
     return new_dic
@@ -137,19 +116,14 @@ def sort_dic_value(dictionary:dict, sort_value:str):
     values = []
     
     for dic in dictionaries:
-        
         values.append(dic[sort_value])
     
     values.sort(reverse=True)
     
     for value in values:
-        
         for key, dic in dictionary.items():
-            
             if dic[sort_value] == value:
-                
                 if key not in new_dic:
-                    
                     new_dic[key] = dic
                     
     return new_dic
