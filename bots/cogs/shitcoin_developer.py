@@ -121,7 +121,7 @@ class Shitcoin_Developer(commands.Cog):
         
         response = ''
         for user in data['shit_coin_list']:
-            response += f'{user}: {data['shit_coin_list'][user]} SC, DC {data['daily_check_list'][user]}, SC {data['steal_check_list'][user]}, T {data['all_time_top_list'][user]}\n'
+            response += f"{user}: {data['shit_coin_list'][user]} SC, DC {data['daily_check_list'][user]}, SC {data['steal_check_list'][user]}, T {data['all_time_top_list'][user]}\n"
 
         await ctx.channel.send(response)
         

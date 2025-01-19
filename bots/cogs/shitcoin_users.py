@@ -23,7 +23,7 @@ class Shitcoin_Users(commands.Cog):
         if data['shit_coin_list'][user] == 0:        
             await ctx.send('Du bist leider broke. Schade Marmelade!')
         else:
-            await ctx.send(f'Du hast {data['shit_coin_list'][user]} SC.')
+            await ctx.send(f"Du hast {data['shit_coin_list'][user]} SC.")
 
     @commands.command(name='bet', help='Setze deine SC in einer Art Lotterie aufs Spiel.')
     async def bet(self, ctx, amount):
@@ -219,7 +219,7 @@ class Shitcoin_Users(commands.Cog):
             await ctx.send('Robin Hood stiehlt nicht von den Armen und du sollst das auch nicht tun.')
             return
         elif data['shit_coin_list'][user] < int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target]):
-            await ctx.send(f'Du brauchst {int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target])} SC dafür. Fluchtwagen bezahlen sich nicht von alleine!')
+            await ctx.send(f"Du brauchst {int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target])} SC dafür. Fluchtwagen bezahlen sich nicht von alleine!")
             return
         
         cost = int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target])
@@ -261,14 +261,14 @@ class Shitcoin_Users(commands.Cog):
             if user not in id_to_nick:
                 id_to_nick[user] = (await self.bot.fetch_user(user)).name
             if data['shit_coin_list'][user] > 0:
-                response += f'{i}. {id_to_nick[user]} mit {data['shit_coin_list'][user]} SC\n'
+                response += f"{i}. {id_to_nick[user]} mit {data['shit_coin_list'][user]} SC\n"
                 i += 1
                 
         response += '\n=== ALL-TIME ===\n\n'
         i = 1
         for user in all_time_top_list:
             if i <= 5:
-                response += f'{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n'
+                response += f"{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n"
             i += 1
     
         await ctx.send(response)
