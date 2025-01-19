@@ -1,17 +1,19 @@
 import os
 import discord
+from discord.ext import commands
 from dotenv import load_dotenv
-import time
-from funcs import *
-
-load_dotenv()
-TOKEN = os.getenv('POLLBOT_TOKEN')
+from cogs.funcs.general import get_ids
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+load_dotenv()
+TOKEN = os.getenv('POLLBOT_TOKEN')
 
+bot = commands.Bot(command_prefix='?', intents=intents)
+
+reactions = []
+query = ''
 emoji = {
     'smile' : '\U0001F601',
     'like' : '\U0001F44D',
@@ -29,54 +31,55 @@ emoji = {
     's' : '\U0001F1F8'
     }
 
-reactions = []
-query = ''
+class Pollbot(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
-@client.event
-async def on_ready():
+    @commands.Cog.listener("on_message")
+    async def react(self, message):
 
-    print('Ready: poll')
+        global reactions
+        global query
+        id_list = get_ids()
 
-@client.event
-async def on_message(message):
+        channel_list = [id_list['zitate'],
+                        id_list['memes-und-witze'],
+                        id_list['suesse-tiere'],
+                        id_list['katzenbilder'],
+                        id_list['atelier']]
 
-    global reactions
-    global query
-    id_list = get_ids()
+        if message.channel.id in channel_list:
 
-    channel_list = [id_list['zitate'],
-                    id_list['memes-und-witze'],
-                    id_list['suesse-tiere'],
-                    id_list['katzenbilder'],
-                    id_list['atelier']]
-
-    if message.channel.id in channel_list:
-
-        await message.add_reaction(emoji['like'])
-        await message.add_reaction(emoji['dislike'])
-        
-    elif message.channel.id == id_list['smash-or-pass']:
-        
-        await message.add_reaction(emoji['s'])
-        await message.add_reaction(emoji['p'])
-
-    elif message.channel.id == id_list['umfragen']:
-        
-        if message.author != client.user:
+            await message.add_reaction(emoji['like'])
+            await message.add_reaction(emoji['dislike'])
             
-            split = message.content.split()
-            reactions = [split[0], split[1], split[2]]
-            query = ' '.join(split[3:])
+        elif message.channel.id == id_list['smash-or-pass']:
             
-            await message.delete()
-            await message.channel.send(f'<@!{message.author.id}>: {query}')
+            await message.add_reaction(emoji['s'])
+            await message.add_reaction(emoji['p'])
+
+        elif message.channel.id == id_list['umfragen']:
             
-        else:
-            
-            for reaction in reactions:
+            if message.author != self.bot.user:
                 
-                if reaction != 'none':
+                split = message.content.split()
+                reactions = [split[0], split[1], split[2]]
+                query = ' '.join(split[3:])
+                
+                await message.delete()
+                await message.channel.send(f'<@!{message.author.id}>: {query}')
+                
+            else:
+                
+                for reaction in reactions:
+                    
+                    if reaction != 'none':
 
-                    await message.add_reaction(emoji[reaction])
+                        await message.add_reaction(emoji[reaction])
 
-client.run(TOKEN)
+@bot.event
+async def on_ready():
+    
+    await bot.add_cog(Pollbot(bot))
+    
+bot.run(TOKEN)

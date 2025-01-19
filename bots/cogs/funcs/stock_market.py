@@ -1,8 +1,8 @@
+import os
 from random import random
 from math import tan
 from math import pi
 from dotenv import load_dotenv
-import os
 
 def get_factor(x:float):
     """Calculates the factor to multiply the current price with based on a seed.
