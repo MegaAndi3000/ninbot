@@ -1,7 +1,7 @@
 from discord.ext import commands
 from cogs.funcs.general import get_ids
 
-class Basic_Counter(commands.cog):
+class Basic_Counter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
