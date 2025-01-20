@@ -253,7 +253,7 @@ class Shitcoin_Users(commands.Cog):
         id_to_nick = await get_id_to_nick(self.bot)
 
         data['shit_coin_list'] = sort_dic(data['shit_coin_list'])
-        all_time_top_list = sort_dic(all_time_top_list)
+        data['all_time_top_list'] = sort_dic(data['all_time_top_list'])
 
         response = '=== AKTUELL ===\n\n'
         i = 1
@@ -266,9 +266,9 @@ class Shitcoin_Users(commands.Cog):
                 
         response += '\n=== ALL-TIME ===\n\n'
         i = 1
-        for user in all_time_top_list:
+        for user in data['all_time_top_list']:
             if i <= 5:
-                response += f"{i}. {id_to_nick[user]} mit {all_time_top_list[user]} SC\n"
+                response += f"{i}. {id_to_nick[user]} mit {data['all_time_top_list'][user]} SC\n"
             i += 1
     
         await ctx.send(response)
