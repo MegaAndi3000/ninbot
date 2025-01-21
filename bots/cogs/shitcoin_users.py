@@ -17,7 +17,7 @@ class Shitcoin_Users(commands.Cog):
         user = str(ctx.author.id)
         id_list = get_ids()
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
 
         if data['shit_coin_list'][user] == 0:        
@@ -32,7 +32,7 @@ class Shitcoin_Users(commands.Cog):
         id_list = get_ids()
         user = str(ctx.author.id)
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
         if amount == 'all':
@@ -71,7 +71,7 @@ class Shitcoin_Users(commands.Cog):
         id_list = get_ids()
         user = str(ctx.author.id)
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
     
         balance = data['shit_coin_list'][user]
@@ -133,7 +133,7 @@ class Shitcoin_Users(commands.Cog):
         id_list = get_ids()
         user = str(ctx.author.id)
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
         last_check = data['daily_check_list'][user]
@@ -141,9 +141,6 @@ class Shitcoin_Users(commands.Cog):
         
         if today == last_check:
             await ctx.send('Du hast schon deine heutige Belohnung eingesammelt.')
-            return
-        elif user == id_list['Tobi2']:
-            await ctx.send('Du kleiner Racker!')
             return
             
         amount = randint(int(os.getenv('DAILY_MIN')), int(os.getenv('DAILY_MAX')))
@@ -158,12 +155,12 @@ class Shitcoin_Users(commands.Cog):
     async def gift(self, ctx, *args):
         
         id_list = get_ids()
+        user = str(ctx.author.id)
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
         data = file_load()
-        user = str(ctx.author.id)
         nick_to_id = await get_nick_to_id(self.bot)
         
         args = list(args)
@@ -184,6 +181,11 @@ class Shitcoin_Users(commands.Cog):
             return
     
         target_id = nick_to_id[target]
+        
+        if target_id not in data['shit_coin_list']:
+            await ctx.send(f'Ich kenne keinen User names {target}.')
+            return
+        
         data['shit_coin_list'][user] -= amount
         data['shit_coin_list'][target_id] += amount
         
@@ -196,18 +198,17 @@ class Shitcoin_Users(commands.Cog):
     async def steal(self, ctx, target):
 
         id_list = get_ids()
+        user = str(ctx.author.id)
         
-        if ctx.channel.id != id_list['shitcoin']:
+        if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
         data = file_load()
-        id_to_nick = await get_id_to_nick(self.bot)
         nick_to_id = await get_nick_to_id(self.bot)
-        user = str(ctx.author.id)
-        target = nick_to_id[target]
+        target_id = nick_to_id[target]
                 
-        if user == id_list['Tobi2']:
-            await ctx.send('Zeitlimits sind nicht dafür da, umgangen zu werden!')
+        if target_id not in data['shit_coin_list']:
+            await ctx.send(f'Ich kenne keinen User names {target}.')
             return
     
         current_time = time.time()
@@ -216,15 +217,15 @@ class Shitcoin_Users(commands.Cog):
             time_difference = int(os.getenv('STEAL_COOLDOWN')) - (current_time - data['steal_check_list'][user])
             await ctx.send(f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {int(time_difference // 60)} min {int(time_difference % 60)} s erneut.')
             return
-        elif data['shit_coin_list'][target] < 100 or data['shit_coin_list'][target] < 0.5 * data['shit_coin_list'][user]:    
+        elif data['shit_coin_list'][target_id] < 100 or data['shit_coin_list'][target_id] < 0.5 * data['shit_coin_list'][user]:    
             # Robin Hood clause
             await ctx.send('Robin Hood stiehlt nicht von den Armen und du sollst das auch nicht tun.')
             return
-        elif data['shit_coin_list'][user] < int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target]):
-            await ctx.send(f"Du brauchst {int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target])} SC dafür. Fluchtwagen bezahlen sich nicht von alleine!")
+        elif data['shit_coin_list'][user] < int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target_id]):
+            await ctx.send(f"Du brauchst {int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target_id])} SC dafür. Fluchtwagen bezahlen sich nicht von alleine!")
             return
         
-        cost = int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target])
+        cost = int(float(os.getenv('STEAL_COST_FACTOR')) * data['shit_coin_list'][target_id])
         data['shit_coin_list'][user] -= cost
         data['steal_check_list'][user] = current_time
         steal_value = random()
@@ -233,10 +234,10 @@ class Shitcoin_Users(commands.Cog):
             file.write(f'{steal_value}\n')
         
         if steal_value <= float(os.getenv('STEAL_PIVOT')):
-            loot = int(float(os.getenv('STEAL_AMOUNT')) * data['shit_coin_list'][target])
-            data['shit_coin_list'][target] -= loot
+            loot = int(float(os.getenv('STEAL_AMOUNT')) * data['shit_coin_list'][target_id])
+            data['shit_coin_list'][target_id] -= loot
             data['shit_coin_list'][user] += loot
-            response = f'Du hast {loot} SC von {id_to_nick[target]} gestohlen. Abzüglich der Fluchtwagenkosten beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
+            response = f'Du hast {loot} SC von {target} gestohlen. Abzüglich der Fluchtwagenkosten beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
         else:
             response = f'Du warst leider nicht erfolgreich. Die {cost} SC für die Fluchtwagen musst du trotzdem zahlen. Aber immerhin gibt es hier kein Justizsystem.'
             
