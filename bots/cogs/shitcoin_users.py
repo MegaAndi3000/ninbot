@@ -154,13 +154,13 @@ class Shitcoin_Users(commands.Cog):
     @commands.command(name='gift', help='Schenke einem anderen User SC.')
     async def gift(self, ctx, *args):
         
+        data = file_load()
         id_list = get_ids()
         user = str(ctx.author.id)
         
         if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
-        data = file_load()
         nick_to_id = await get_nick_to_id(self.bot)
         
         args = list(args)
@@ -197,13 +197,13 @@ class Shitcoin_Users(commands.Cog):
     @commands.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
     async def steal(self, ctx, target):
 
+        data = file_load()
         id_list = get_ids()
         user = str(ctx.author.id)
         
         if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
         
-        data = file_load()
         nick_to_id = await get_nick_to_id(self.bot)
         target_id = nick_to_id[target]
                 
