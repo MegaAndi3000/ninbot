@@ -26,10 +26,11 @@ class Test(commands.Cog):
             if day == today:
                 await channel.send(event_message)
                 
-        for day, user_id in events["birthdays"].items():
+        for day, user_list in events["birthdays"].items():
             if day == today:
-                user = self.bot.get_user(user_id)
-                await channel.send(f"Alles gute zum Geburtstag, {user.mention}!")
+                for user_id in user_list:
+                    user = self.bot.get_user(user_id)
+                    await channel.send(f"Alles gute zum Geburtstag, {user.mention}!")
 
 async def setup(bot):
     await bot.add_cog(Test(bot))
