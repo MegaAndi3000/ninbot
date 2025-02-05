@@ -38,7 +38,7 @@ class Shitcoin_Users(commands.Cog):
         if amount == 'all':
             amount = data['shit_coin_list'][user]
         else:
-            amount = int(amount)
+            amount = float(amount)
         
         if amount > data['shit_coin_list'][user]:
             await ctx.send('Du hast nicht genügend SC dafür.')
@@ -56,8 +56,8 @@ class Shitcoin_Users(commands.Cog):
         
         data['shit_coin_list'][user] -= amount
         prize = choice(prize_list)
-        reward = int(amount * prize)
-        data['shit_coin_list'][user] = int(data['shit_coin_list'][user] + reward)
+        reward = amount * prize
+        data['shit_coin_list'][user] = data['shit_coin_list'][user] + reward
         
         file_update(data)
         
@@ -79,7 +79,7 @@ class Shitcoin_Users(commands.Cog):
         if amount == 'all':            
             amount = balance
         else:
-            amount = int(amount)
+            amount = float(amount)
             
         if amount > balance:
             await ctx.send('Du hast nicht genügend SC.')

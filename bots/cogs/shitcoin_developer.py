@@ -83,7 +83,7 @@ class Shitcoin_Developer(commands.Cog):
             await ctx.channel.send('Du bist dazu nicht berechtigt. Sorry!')
             return
 
-        data['shit_coin_list'][user] = int(amount)
+        data['shit_coin_list'][user] = float(amount)
 
         file_update(data)
 
