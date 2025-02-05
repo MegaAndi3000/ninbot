@@ -20,10 +20,13 @@ class Shitcoin_Users(commands.Cog):
         if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
 
-        if data['shit_coin_list'][user] == 0:        
+        amount = data['shit_coin_list'][user]
+        if amount == int(amount):
+            amount = int(amount)
+        if amount == 0:        
             await ctx.send('Du bist leider broke. Schade Marmelade!')
         else:
-            await ctx.send(f"Du hast {data['shit_coin_list'][user]} SC.")
+            await ctx.send(f"Du hast {amount} SC.")
 
     @commands.command(name='bet', help='Setze deine SC in einer Art Lotterie aufs Spiel.')
     async def bet(self, ctx, amount):
@@ -39,12 +42,15 @@ class Shitcoin_Users(commands.Cog):
             amount = data['shit_coin_list'][user]
         else:
             amount = float(amount)
+            
+        if amount == int(amount):
+            amount = int(amount)
         
         if amount > data['shit_coin_list'][user]:
             await ctx.send('Du hast nicht genügend SC dafür.')
             return
-        elif amount < 10:
-            await ctx.send('Du musst mindestens 10 SC einsetzen.')
+        elif amount < 1:
+            await ctx.send('Du musst mindestens 1 SC einsetzen.')
             return
 
         prize_list = [5] * 1 + [2] * 24 + [1] * 20 + [0.5] * 34 + [0] * 21
@@ -81,11 +87,17 @@ class Shitcoin_Users(commands.Cog):
         else:
             amount = float(amount)
             
+        if amount == int(amount):
+            amount = int(amount)
+            
         if amount > balance:
             await ctx.send('Du hast nicht genügend SC.')
             return
         elif amount <= 0:
             await ctx.send('Du kleiner Halunke. So nicht!')
+            return
+        elif amount < 1:
+            await ctx.send('Ein Mindesteinsatz von 1 SC ist leider Vorschrift.')
             return
 
         cf_value = random()        
