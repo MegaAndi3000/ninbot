@@ -1,7 +1,7 @@
 import os
 from discord.ext import commands
 from cogs.funcs.general import get_ids, get_id_to_nick, get_nick_to_id, sort_dic
-from cogs.funcs.shitcoin import file_load, file_update
+from cogs.funcs.shitcoin import file_load, file_update, log_event
 from random import choice, random, randint
 from datetime import date
 import time
@@ -66,6 +66,7 @@ class Shitcoin_Users(commands.Cog):
         data['shit_coin_list'][user] = data['shit_coin_list'][user] + reward
         
         file_update(data)
+        log_event("bet", {"user": user, "amount": amount, "prize": prize})
         
         response = answer_list[prize].replace('[amount]', f'{abs(amount - reward)}')
         await ctx.send(response)
@@ -113,6 +114,7 @@ class Shitcoin_Users(commands.Cog):
             
         data['shit_coin_list'][user] = balance
         file_update(data)
+        log_event("coinflip", {"user": user, "amount": amount, "cf_value": cf_value})
         await ctx.send(response)
 
     @commands.command(name='cf_history', help='Zeigt die Gesamtbilanz der Münzwürfe.')
@@ -162,6 +164,7 @@ class Shitcoin_Users(commands.Cog):
         await ctx.send(response)
         
         file_update(data)
+        log_event("daily", {"user": user, "amount": amount})
 
     @commands.command(name='gift', help='Schenke einem anderen User SC.')
     async def gift(self, ctx, *args):
@@ -204,6 +207,7 @@ class Shitcoin_Users(commands.Cog):
         response = f'Du hast {target} {amount} SC geschenkt.'
 
         file_update(data)
+        log_event("gift", {"user": user, "target": target, "amount": amount})
         await ctx.send(response)            
 
     @commands.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
@@ -251,9 +255,11 @@ class Shitcoin_Users(commands.Cog):
             data['shit_coin_list'][user] += loot
             response = f'Du hast {loot} SC von {target} gestohlen. Abzüglich der Fluchtwagenkosten beläuft sich dein Gewinn auf {int(loot - cost)} SC.'
         else:
+            loot = 0
             response = f'Du warst leider nicht erfolgreich. Die {cost} SC für die Fluchtwagen musst du trotzdem zahlen. Aber immerhin gibt es hier kein Justizsystem.'
             
         file_update(data)
+        log_event("steal", {"user": user, "target": target, "cost": cost, "loot": loot, "steal_value": steal_value, "pivot": os.getenv("STEAL_PIVOT")})
         await ctx.send(response)
 
     @commands.command(name='top', help='Zeigt die aktuelle und all time Rangliste an.')

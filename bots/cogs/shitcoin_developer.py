@@ -1,7 +1,7 @@
 import os
 from discord.ext import commands
 from cogs.funcs.general import get_ids, get_id_to_nick, get_nick_to_id
-from cogs.funcs.shitcoin import file_load, file_update
+from cogs.funcs.shitcoin import file_load, file_update, log_event
 from dotenv import load_dotenv
 
 class Shitcoin_Developer(commands.Cog):
@@ -9,7 +9,7 @@ class Shitcoin_Developer(commands.Cog):
         self.bot = bot
         
     @commands.command(name='add_user', help='DEBUG: Fügt einen neuen Nutzer hinzu.')
-    async def add_user(self, ctx, target):
+    async def add_user(self, ctx, user):
 
         data = file_load()
         id_list = get_ids()
@@ -20,15 +20,14 @@ class Shitcoin_Developer(commands.Cog):
             await ctx.send('Du bist dazu nicht berechtigt. Sorry!')
             return
             
-        user = target
-        
         data['shit_coin_list'][user] = 0
         data['daily_check_list'][user] = '1970-01-01'
         data['steal_check_list'][user] = 0
         data['all_time_top_list'][user] = 0
         
         file_update(data)
-        await ctx.send(f'User {target} wurde hinzugefügt.')
+        log_event("add_user", {"user": user})
+        await ctx.send(f'User {user} wurde hinzugefügt.')
 
     @commands.command(name='data_reset', help='DEBUG: Setzt alle Daten zurück.')
     async def data_reset(self, ctx):
@@ -53,6 +52,7 @@ class Shitcoin_Developer(commands.Cog):
                         data['all_time_top_list'][user] = 0 
                         
         file_update(data)
+        log_event("reset", {})
                             
     @commands.command(name = 'remove_user', help='DEBUG: Entfernt einen Nutzer.')
     async def remove_user(self, ctx, user):
@@ -69,6 +69,7 @@ class Shitcoin_Developer(commands.Cog):
         del data['shit_coin_list'][user], data['daily_check_list'][user], data['steal_check_list'][user], data['all_time_top_list'][user]
         
         file_update(data)
+        log_event("remove_user", {"user": user})
         await ctx.send(f'User {user} wurde entfernt.')
 
     @commands.command(name='set', help='DEBUG: Setzt die SC eines Users auf einen bestimmten Wert.')
@@ -86,6 +87,7 @@ class Shitcoin_Developer(commands.Cog):
         data['shit_coin_list'][user] = float(amount)
 
         file_update(data)
+        log_event("coin set", {"user": user, "amount": amount})
 
     @commands.command(name='show_env', help='DEBUG: Zeigt alle Umgebungsvariablen (.env) an.')
     async def show_env(self, ctx):

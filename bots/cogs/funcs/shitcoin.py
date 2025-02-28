@@ -1,4 +1,5 @@
 import json
+import time
 from dotenv import load_dotenv
 
 def file_update(data):
@@ -18,3 +19,12 @@ def file_load():
         data = json.load(file)
         
     return data
+
+def log_event(event:str, data:dict):
+    
+    data_string = ""
+    for key, value in data.items():
+        data_string += f"{key}:{value} "
+    
+    with open("Data/shitcoin_events.txt", "a") as file:
+        file.write(f"{event} ~ {int(time.time())} ~ {data_string}\n")
