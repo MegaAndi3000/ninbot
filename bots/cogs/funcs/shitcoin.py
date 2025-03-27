@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 def file_update(data):
 
     for user, balance in data["shit_coin_list"].items():
+        if balance == int(balance):
+            data["shit_coin_list"][user] = int(balance)
         if balance > data["all_time_top_list"][user]:
             data["all_time_top_list"][user] = balance
 
