@@ -211,11 +211,12 @@ class Shitcoin_Users(commands.Cog):
         await ctx.send(response)            
 
     @commands.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
-    async def steal(self, ctx, target):
+    async def steal(self, ctx, *args):
 
         data = file_load()
         id_list = get_ids()
         user = str(ctx.author.id)
+        target = ' '.join(args)
         
         if ctx.channel.id != id_list['shitcoin'] or user not in data['shit_coin_list']:
             return
