@@ -232,7 +232,10 @@ class Shitcoin_Users(commands.Cog):
         
         if current_time < data['steal_check_list'][user] + int(os.getenv('STEAL_COOLDOWN')):
             time_difference = int(os.getenv('STEAL_COOLDOWN')) - (current_time - data['steal_check_list'][user])
-            await ctx.send(f'Du kannst nur einmal pro Stunde ein solches Unterfangen starten. Probiere es in {int(time_difference // 60)} min {int(time_difference % 60)} s erneut.')
+            if time_difference < 3600:
+                await ctx.send(f'Der Fluchtwagen muss noch geladen werden. Probiere es in {int(time_difference // 60)} min {int(time_difference % 60)} s erneut.')
+            else:
+                await ctx.send(f'Das ist gerade kein guter Zeitpunkt. Probiere es in {int(time_difference // 3600)} h {int((time_difference % 3600) // 60)} min erneut.')
             return
         elif data['shit_coin_list'][target_id] < 100 or data['shit_coin_list'][target_id] < 0.5 * data['shit_coin_list'][user]:    
             # Robin Hood clause
