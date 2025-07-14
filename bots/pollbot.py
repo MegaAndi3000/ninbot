@@ -49,17 +49,14 @@ class Pollbot(commands.Cog):
                         id_list['atelier']]
 
         if message.channel.id in channel_list:
-
             await message.add_reaction(emoji['like'])
             await message.add_reaction(emoji['dislike'])
             
         elif message.channel.id == id_list['smash-or-pass']:
-            
             await message.add_reaction(emoji['s'])
             await message.add_reaction(emoji['p'])
 
         elif message.channel.id == id_list['umfragen']:
-            
             if message.author != self.bot.user:
                 
                 split = message.content.split()
@@ -70,11 +67,8 @@ class Pollbot(commands.Cog):
                 await message.channel.send(f'<@!{message.author.id}>: {query}')
                 
             else:
-                
                 for reaction in reactions:
-                    
                     if reaction != 'none':
-
                         await message.add_reaction(emoji[reaction])
 
 @bot.event

@@ -1,3 +1,5 @@
+import time
+
 def get_ids():
     """Reads the ids of channels und users from '.ids'.
 

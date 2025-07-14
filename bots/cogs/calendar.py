@@ -14,6 +14,7 @@ class Test(commands.Cog):
 
     @tasks.loop(time=calendar_check_time)
     async def daily_check(self):
+        
         with open("Data/calendar_events.json", "r") as file:
             events = json.load(file)
             
