@@ -182,6 +182,13 @@ class Shitcoin_Users(commands.Cog):
         log_event("gift", {"user": user, "target": target, "amount": amount})
         await ctx.send(response)
 
+    @commands.command(name='round', help='Rundet dein Vermögen auf eine ganze Zahl ab.')
+    async def round(self, ctx):
+
+        user = str(ctx.author.id)
+        self.data["shit_coin_list"][user] = int(self.data["shit_coin_list"][user])    
+        await ctx.send("Dein Vermögen wurde erfolgreich abgerundet.")
+    
     @commands.command(name='steal', help='Stiehl einer anderen Person ihre hart erarbeiteten SC.')
     async def steal(self, ctx, *args):
 
